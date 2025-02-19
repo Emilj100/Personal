@@ -1,0 +1,38 @@
+Here is your training program:
+
+4 Days per Week - 2 Upper, 2 Lower
+
+- Day 1 (Upper Body):
+
+    - Cardio: 20 min choice of running, cycling, stairmaster, or rowing machine
+    - Bench Press: 4 x 8-10
+    - Dumbbell Shoulder Press: 3 x 12
+    - Lat Pulldown: 3 x 10
+    - Bicep Curls: 3 x 12
+    - Tricep Pushdowns: 3 x 12
+
+- Day 2 (Lower Body):
+
+    - Cardio: 20 min choice of running, cycling, stairmaster, or rowing machine
+    - Squats: 4 x 10
+    - Leg Press: 3 x 12
+    - Lunges: 3 x 12
+    - Calf Raises: 3 x 15
+    - Leg Extensions: 3 x 10
+
+- Day 3 (Upper Body):
+
+    - Cardio: 20 min choice of running, cycling, stairmaster, or rowing machine
+    - Incline Dumbbell Press: 4 x 10
+    - Seated Rows: 3 x 10
+    - Dumbbell Lateral Raises: 3 x 12
+    - Hammer Curls: 3 x 12
+    - Skull Crushers: 3 x 10
+
+- Day 4 (Lower Body):
+
+    - Cardio: 20 min choice of running, cycling, stairmaster, or rowing machine
+    - Deadlifts: 3 x 8
+    - Bulgarian Split Squats: 3 x 10
+    - Leg Curls: 3 x 12
+    - Calf Raises: 4 x 15

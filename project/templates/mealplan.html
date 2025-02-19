@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Meal Plan
+{% endblock %}
+
+{% block main %}
+<!-- Hero Section -->
+<div class="container my-5 text-center">
+    <h1 class="display-4 mb-3 fw-bold">Meal Plan</h1>
+    <p class="lead text-muted">Create a personalized meal plan tailored to your dietary needs and preferences!</p>
+</div>
+
+<!-- Meal Plan Preferences Form -->
+<div class="container my-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4">Customize Your Meal Plan</h4>
+            <form action="/mealplan" method="post">
+                <!-- CSRF token for protection -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <!-- Hidden field to indicate the form action -->
+                <input type="hidden" name="action" value="add">
+
+                <!-- Plan Name (Required) -->
+                <div class="mb-3">
+                    <label for="plan_name" class="form-label">Plan Name</label>
+                    <input type="text" class="form-control" id="plan_name" name="plan_name" placeholder="E.g., Weekly Vegetarian Plan" required>
+                    <div class="form-text">Please enter a name for your meal plan.</div>
+                </div>
+
+                <!-- Submit button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Generate Meal Plan</button>
+                </div>
+            </form>
+            {% if error %}
+            <div class="text-danger mb-3 text-center">
+                {{ error }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Saved Meal Plans Section -->
+<div class="container my-5">
+    <h2 class="text-center mb-4">Your Meal Plans</h2>
+    {% for plan in meal_plans %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ plan.name }}</h5>
+                    <p>
+                        <strong>Calories:</strong> {{ plan.calories }} kcal<br>
+                        <strong>Protein:</strong> {{ plan.protein }}g<br>
+                        <strong>Carbohydrates:</strong> {{ plan.carbohydrates }}g<br>
+                        <strong>Fat:</strong> {{ plan.fat }}g
+                    </p>
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#plan-{{ plan.id }}">
+                            View Meals
+                        </button>
+                        <!-- Delete Meal Plan Form with CSRF Protection -->
+                        <form action="/mealplan" method="post" style="display: inline;">
+                            <!-- CSRF token for protection -->
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="plan_id" value="{{ plan.id }}">
+                            <button class="btn btn-sm btn-danger" type="submit">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="collapse" id="plan-{{ plan.id }}">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for meal in meals_by_plan[plan.id] %}
+                            <li class="list-group-item">
+                                <strong>{{ meal.title }}</strong><br>
+                                <img src="https://img.spoonacular.com/recipes/{{ meal.meal_id }}-312x231.{{ meal.imagetype }}"
+                                    alt="{{ meal.title }}"
+                                    class="img-fluid mb-2 border rounded"
+                                    onerror="this.style.display='none';">
+                                <p>
+                                    <strong>Ready in:</strong> {{ meal.ready_in_minutes }} minutes<br>
+                                    <a href="{{ meal.source_url }}" target="_blank" class="btn btn-sm btn-primary">View Recipe</a>
+                                </p>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

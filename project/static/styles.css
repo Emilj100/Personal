@@ -1,0 +1,250 @@
+/* General settings for fonts and buttons */
+.nav-link:hover {
+    text-decoration: underline !important;
+}
+
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif !important;
+}
+p {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.btn-custom {
+    color: black;
+    border-color: black;
+}
+
+.btn-custom:hover {
+    background-color: black;
+    color: white;
+    border-color: black;
+}
+
+/* Animations */
+.section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-in-immediate {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in-left, .slide-in-right {
+    opacity: 0;
+    transform: translateX(100px); /* Default position for right */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Slide-in from the left */
+.slide-in-left {
+    transform: translateX(-100px); /* Moves the element to the left */
+}
+
+.slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0); /* Element slides in from the left */
+}
+
+/* Slide-in from the right */
+.slide-in-right {
+    transform: translateX(100px); /* Moves the element to the right */
+}
+
+.slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0); /* Element slides in from the right */
+}
+
+/* Login page */
+.form-signin {
+    padding-right: 100px;
+    padding-left: 100px;
+    padding-bottom: 40px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centers the content in the box */
+}
+
+.form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+/* Training log page */
+.start-training-btn {
+    background-color: #388e3c;
+    color: white;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.start-training-btn:hover {
+    background-color: #2e7d32; /* Darker green on hover */
+    color: white;
+}
+
+/* Dashboard_layout.html sidebar */
+.sidebar {
+    min-height: 100vh;
+}
+/* Offcanvas styling: black background and white text */
+.offcanvas.bg-black {
+    background-color: #000;
+}
+.offcanvas.bg-black .nav-link {
+    color: #fff;
+}
+/* Override active state for mobile offcanvas so that dashboard overview (and other active links) become blue */
+.offcanvas.bg-black .nav-link.active {
+    background-color: #0d6efd; /* Bootstrap's primary blue */
+    color: #fff;
+}
+/* Hover effect for links in offcanvas */
+.offcanvas.bg-black .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+/* Invert the color of the close button so it is visible on a black background */
+.offcanvas.bg-black .btn-close {
+    filter: invert(1);
+}
+
+/* Sidebar hover effect without text underline */
+.sidebar .nav-link {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none !important;
+}
+
+/* CALORIES PAGE */
+@media (max-width: 767.98px) {
+    /* If you have tables, wrap them in a container with these classes */
+    .responsive-table {
+        font-size: 0.9rem;
+        /* Optionally extra padding or margin can be added here */
+    }
+    /* Make charts larger with a nicer aspect ratio */
+    .mobile-chart {
+        /* Use Bootstrap's ratio component with a slightly different aspect ratio */
+        --bs-aspect-ratio: 75%;
+    }
+}
+
+/* INDEX PAGE */
+.hero-img {
+    object-fit: cover;
+    max-height: 800px; /* for large screens */
+}
+
+/* Smaller screens */
+@media (max-width: 768px) {
+    /* Make the hero image taller – for example, set a fixed height */
+    .hero-img {
+        height: 600px !important;
+        object-fit: cover;
+    }
+    .hero-text h1 {
+        font-size: 1.8rem;
+    }
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+    .slide-in-left .row,
+    .slide-in-right .row {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* Force all images in slide-in sections (and others with mx-lg-auto) to center */
+    .slide-in-left img,
+    .slide-in-right img,
+    .img-fluid.mx-lg-auto,
+    .d-block.mx-lg-auto {
+        display: block !important;
+        margin: 0 auto !important;
+    }
+}
+
+/* Extra spacing for hero section */
+.hero-wrapper {
+    margin-bottom: 3rem;
+}
+
+/* Prevent slide-in sections from causing horizontal scroll */
+.slide-in-left, .slide-in-right {
+    overflow: hidden;
+}
+
+/* DASHBOARD PAGE */
+@media (max-width: 768px) {
+    /* Make buttons in .dashboard-buttons full width with extra margin */
+    .dashboard-buttons a {
+        width: 100%;
+    }
+    .dashboard-buttons a + a {
+        margin-top: 1rem;
+    }
+    /* Override the Bootstrap ratio so that charts become taller */
+    .mobile-chart {
+        --bs-aspect-ratio: 75%;
+    }
+}
+
+/* TRAINING PAGE */
+@media (max-width: 768px) {
+    /* To make charts taller on mobile – override the default aspect ratio */
+    .mobile-chart {
+        --bs-aspect-ratio: 75%;
+    }
+}
+
+/* LAYOUT.HTML */
+html, body {
+    overflow-x: hidden;
+}
+
+/* Standard styling for desktop (and default) */
+header a img {
+    max-height: 150px;
+}
+
+/* Changes only for smaller screens (below lg) */
+@media (max-width: 991px) {
+    header .container {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    /* Increase logo size and move it slightly downward */
+    header a img {
+        max-height: 120px;
+        margin-top: 0.5rem;
+    }
+}

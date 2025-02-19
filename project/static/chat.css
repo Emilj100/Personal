@@ -1,0 +1,138 @@
+/* Chat Widget Container */
+#chat-widget {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 320px;
+    max-height: 450px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: none;
+    flex-direction: column;
+    z-index: 1050;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Header with Blue Gradient and Close Button */
+#chat-widget header {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: #fff;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    cursor: move;
+}
+#chat-widget header button#chat-close {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+/* Message Area */
+#chat-widget .messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Each Message Row */
+.message {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Coach Messages (Left-Aligned) */
+.message.coach {
+    justify-content: flex-start;
+}
+.message.coach .bubble {
+    background-color: #e9ecef;
+    color: #333;
+    border-radius: 15px;
+    padding: 10px;
+    word-wrap: break-word;
+    max-width: 80%;
+    border-bottom-left-radius: 5px;
+    margin-right: auto;
+}
+
+/* User Messages (Right-Aligned) */
+.message.user {
+    justify-content: flex-end;
+}
+.message.user .bubble {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 15px;
+    padding: 10px;
+    word-wrap: break-word;
+    max-width: 80%;
+    border-bottom-right-radius: 5px;
+    margin-left: auto;
+}
+
+/* Footer */
+#chat-widget footer {
+    display: flex;
+    border-top: 1px solid #ddd;
+}
+#chat-widget footer input {
+    flex: 1;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    outline: none;
+}
+#chat-widget footer button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+#chat-widget footer button:hover {
+    background: #0056b3;
+}
+
+/* Chat Toggle Button (Icon in a Circular Button) */
+#chat-toggle {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 1100;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+}
+#chat-toggle.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+#chat-toggle i {
+    margin: 0;
+    font-size: 1.6rem;
+}

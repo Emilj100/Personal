@@ -1,0 +1,96 @@
+{% extends "dashboard/dashboard_layout.html" %}
+{% block title %}Training Analytics{% endblock %}
+
+{% block main %}
+
+<div class="container mt-4">
+    <div class="mb-3">
+        <h2 class="fw-bold">Analyze your weekly training performance</h2>
+        <p class="text-muted">
+            Week: {{ start_of_week }} to {{ end_of_week }}
+        </p>
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="row mb-4">
+        <!-- Total Sessions This Week -->
+        <div class="col-md-4">
+            <div class="card text-center p-4 shadow-sm">
+                <i class="bi bi-graph-up fs-2 text-primary"></i>
+                <h5 class="mt-3">Total Sessions This Week</h5>
+                <h3 class="fw-bold">{{ total_sessions }}</h3>
+            </div>
+        </div>
+        <!-- Average Weight Increase -->
+        <div class="col-md-4">
+            <div class="card text-center p-4 shadow-sm">
+                <i class="bi bi-bar-chart-line fs-2 text-success"></i>
+                <h5 class="mt-3">Average Weight Increase</h5>
+                <h3 class="fw-bold">
+                    {% if avg_weight_increase >= 0 %}
+                        +{{ avg_weight_increase }} kg
+                    {% else %}
+                        {{ avg_weight_increase }} kg
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+        <!-- Total Sets This Week -->
+        <div class="col-md-4">
+            <div class="card text-center p-4 shadow-sm">
+                <i class="bi bi-layers fs-2 text-warning"></i>
+                <h5 class="mt-3">Total Sets This Week</h5>
+                <h3 class="fw-bold">{{ total_sets }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Training Sessions Overview -->
+    <div class="card p-4 shadow-sm mb-4">
+        <h4 class="fw-bold">Training Sessions This Week</h4>
+        <ul class="list-group list-group-flush">
+            {% for session in sessions_overview %}
+                <li class="list-group-item">
+                    {{ session.session_date }} ({{ session.day_name }}) - {{ session.exercises_count }} exercises
+                </li>
+            {% else %}
+                <li class="list-group-item">No sessions recorded.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Volume Per Muscle Group -->
+    <h4 class="fw-bold mb-3">Volume Per Muscle Group (kg)</h4>
+    <div class="row mb-4">
+        {% for row in volume_data %}
+        <div class="col-md-4">
+            <div class="card text-center p-4 shadow-sm">
+                <h5>{{ row.muscle | capitalize }}</h5>
+                <h3 class="fw-bold">{{ row.total_volume if row.total_volume is not none else 0 }} kg</h3>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Training Frequency Chart - fylder nu hele bredden -->
+    <div class="row">
+        <div class="col-12">
+            <h5 class="fw-bold">Training Frequency (Last 4 Weeks)</h5>
+            <div class="ratio ratio-16x9 mobile-chart">
+              <canvas id="trainingFrequencyChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Minimal inline script to save data -->
+<script>
+    window.trainingData = {
+        freqData: {{ freq_data | tojson | safe }}
+    };
+</script>
+{% endblock %}
+
+
+
+

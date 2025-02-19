@@ -1,0 +1,100 @@
+{% extends "dashboard/dashboard_layout.html" %}
+{% block title %}Dashboard Overview{% endblock %}
+
+{% block main %}
+
+<div class="container mt-4">
+    <h2 class="mb-4 fw-bold">
+        Hey, {{ user_name | title }}! Here’s your progress update for this week 🚀
+    </h2>
+
+    <!-- Overview Cards -->
+    <div class="row">
+        <!-- Last Check-in Weight Card -->
+        <div class="col-md-4">
+            <div class="card text-center p-4 shadow-sm">
+                <i class="bi bi-graph-up fs-2 text-primary"></i>
+                <h5 class="mt-3">Last Check-in Weight</h5>
+                <h3 class="fw-bold">
+                    {% if latest_weight == "No data yet" %}
+                        {{ latest_weight }}
+                    {% else %}
+                        {{ latest_weight }} kg
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+        <!-- Average Caloric Intake Card -->
+        <div class="col-md-4">
+            <div class="card text-center p-4 shadow-sm">
+                <i class="bi bi-fire fs-2 text-danger"></i>
+                <h5 class="mt-3">Average Caloric Intake</h5>
+                <h3 class="fw-bold">
+                    {% if average_caloric_intake == "No data yet" %}
+                        {{ average_caloric_intake }}
+                    {% else %}
+                        {{ average_caloric_intake }} kcal
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+        <!-- Workouts This Week Card -->
+        <div class="col-md-4">
+            <div class="card text-center p-4 shadow-sm">
+                <i class="bi bi-heart-pulse fs-2 text-success"></i>
+                <h5 class="mt-3">Workouts This Week</h5>
+                <h3 class="fw-bold">{{ total_sessions }} times</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Bar for Weight Goal -->
+    <div class="mt-5 p-4 bg-white rounded shadow-sm">
+        <h5 class="fw-bold">Progress Towards Weight Goal</h5>
+        <div class="progress" style="height: 25px; border-radius: 12px; overflow: hidden;">
+            <div class="progress-bar bg-primary fw-bold" style="width: {{ progress }}%; font-size: 14px;">
+                {{ progress }}%
+            </div>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="mt-4 text-center dashboard-buttons">
+        <a href="/checkin" class="btn btn-primary btn-lg me-2">
+            <i class="bi bi-pencil-square"></i> New Check-in
+        </a>
+        <a href="/settings" class="btn btn-outline-primary btn-lg">
+            <i class="bi bi-gear"></i> Update Goals
+        </a>
+    </div>
+
+    <!-- Graphs -->
+    <div class="row mt-5">
+        <!-- Weight Progress Graph -->
+        <div class="col-md-6">
+            <h5 class="fw-bold">Weight Progress Over Time</h5>
+            <div class="ratio ratio-16x9 mobile-chart">
+              <canvas id="weightChart"></canvas>
+            </div>
+        </div>
+        <!-- Caloric Intake Graph - Current Week -->
+        <div class="col-md-6">
+            <h5 class="fw-bold">Caloric Intake - Current Week</h5>
+            <div class="ratio ratio-16x9 mobile-chart">
+              <canvas id="calorieChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Minimal inline script to save data -->
+<script>
+    window.dashboardData = {
+        weightLabels: {{ weight_labels | tojson | safe }},
+        weightValues: {{ weight_values | tojson | safe }},
+        calorieDays: {{ calorie_days | tojson | safe }},
+        calorieValues: {{ calorie_values | tojson | safe }},
+        calorieGoal: {{ calorie_goal | round(0) }}
+    };
+</script>
+{% endblock %}

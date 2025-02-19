@@ -1,0 +1,184 @@
+{% extends "layout.html" %}
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+<main>
+    <!-- Hero Section (Hero Image + Overlay Text) -->
+    <div class="position-relative hero-wrapper mb-6">
+        <img src="/static/homepage1.jpeg"
+             class="img-fluid w-100 hero-img"
+             alt="Descriptive text">
+
+        <div class="container position-absolute top-50 start-50 translate-middle text-center text-white fade-in-immediate hero-text">
+            <h1>Achieve Your Fitness Goals with Ease</h1>
+            <p class="opacity-75">
+                Track your calories, plan your meals, and log your workouts—all in one place.
+                Your journey to a healthier you starts here.
+            </p>
+            {% if session["user_id"] %}
+                <p><a class="btn btn-lg btn-primary" href="/dashboard">View Dashboard</a></p>
+            {% else %}
+                <p><a class="btn btn-lg btn-primary" href="/register-part1">Sign up today</a></p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Tools Section -->
+    <div class="container px-4 py-5 fade-in-immediate" id="featured-3">
+        <h2 class="pb-2 border-bottom text-center">Tools to Transform Your Health</h2>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+            <!-- Feature 1: Calorie Tracker -->
+            <div class="feature col">
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center
+                            text-bg-primary bg-gradient fs-2 mb-3 rounded-3"
+                     style="width: 4rem; height: 4rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                         fill="white" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+                        <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5
+                                 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0
+                                 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0
+                                 1 1-1h2a1 1 0 0 1 1 1v7h1z"/>
+                    </svg>
+                </div>
+                <h3 class="fs-2 text-body-emphasis">Calorie Tracker</h3>
+                <p class="lead">
+                    Keep track of your daily calorie intake effortlessly. With our easy-to-use calorie tracker,
+                    you can log your meals and snacks, monitor your nutritional balance, and ensure you're
+                    staying on track with your fitness goals. Whether you're aiming to lose weight, gain muscle,
+                    or maintain your current health, this tool provides clear insights to support your journey.
+                </p>
+            </div>
+
+            <!-- Feature 2: Workout Logs -->
+            <div class="feature col">
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center
+                            text-bg-primary bg-gradient fs-2 mb-3 rounded-3"
+                     style="width: 4rem; height: 4rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="white" class="bi bi-clipboard2-check" viewBox="0 0 16 16">
+                        <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5z"/>
+                        <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5z"/>
+                        <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
+                    </svg>
+                </div>
+                <h3 class="fs-2 text-body-emphasis">Workout Logs</h3>
+                <p class="lead">
+                    Monitor your workout progress with detailed logs. Track the sets, reps, and weights for each
+                    exercise, and watch your strength improve over time. Whether you're lifting weights, doing
+                    cardio, or practicing yoga, the workout log helps you stay organized and motivated. Visualize
+                    your progress with easy-to-read graphs and stay consistent with your training.
+                </p>
+            </div>
+
+            <!-- Feature 3: Meal Plans -->
+            <div class="feature col">
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center
+                            text-bg-primary bg-gradient fs-2 mb-3 rounded-3"
+                     style="width: 4rem; height: 4rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="white" class="bi bi-basket" viewBox="0 0 16 16">
+                        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9zM1 7v1h14V7zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5"/>
+                    </svg>
+                </div>
+                <h3 class="fs-2 text-body-emphasis">Meal Plans</h3>
+                <p class="lead">
+                    Take the guesswork out of healthy eating with personalized meal plans tailored to your
+                    fitness goals. Our meal planner provides balanced recipes, portion sizes, and nutritional
+                    breakdowns to ensure you're fueling your body the right way. Whether you're looking for
+                    high-protein meals or low-carb options, we’ve got you covered with easy-to-follow plans.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reverse layout on larger screens -->
+    <div class="container col-xxl-8 px-4 py-5 slide-in-left">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+            <div class="col-10 col-sm-8 col-lg-6">
+                <img src="/static/homepage2.png"
+                     class="d-block mx-lg-auto img-fluid border rounded"
+                     alt="Bootstrap Themes"
+                     width="700"
+                     height="500"
+                     loading="lazy">
+            </div>
+            <div class="col-lg-6">
+                <h1>Why Choose Us for Your Fitness Journey?</h1>
+                <p class="lead">
+                    Our platform simplifies fitness tracking and planning, making it easy to stay consistent
+                    and achieve your goals. With tools designed to fit your lifestyle, you can track calories,
+                    create personalized meal plans, and monitor your workout progress—all in one place.
+                    Whether you're a beginner or an experienced athlete, we provide the insights and support
+                    you need to succeed. Join a community that prioritizes your health and fitness..
+                </p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    {% if session["user_id"] %}
+                        <a class="btn btn-primary btn-lg px-4 me-md-2" href="/dashboard">View Dashboard</a>
+                    {% else %}
+                        <a href="/login" class="btn btn-outline-secondary btn-lg px-4 btn-custom">Log in</a>
+                        <a href="/register-part1" class="btn btn-primary btn-lg px-4 me-md-2">Sign up</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full width container (bg-light) -->
+    <div class="container-fluid px-0 py-5 slide-in-right bg-light">
+        <div class="container col-xxl-8 px-4 py-5">
+            <div class="row align-items-center g-5 py-5">
+                <div class="col-10 col-sm-8 col-lg-6">
+                    <img src="/static/homepage3.png"
+                         class="d-block mx-lg-auto img-fluid border rounded"
+                         alt="Bootstrap Themes"
+                         width="700"
+                         height="500"
+                         loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                    <h1>Our Mission: Empowering You to Live Healthier</h1>
+                    <p class="lead">
+                        Our mission is to make health and fitness accessible to everyone, no matter where you
+                        are on your journey. We believe that achieving your goals should be simple, enjoyable,
+                        and sustainable. That’s why we’ve created a platform that combines powerful tools,
+                        personalized insights, and a supportive community to help you succeed. Whether you’re
+                        looking to lose weight, build muscle, or improve your overall well-being, we’re here
+                        to guide and motivate you every step of the way.
+                    </p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        {% if session["user_id"] %}
+                            <a class="btn btn-primary btn-lg px-4 me-md-2" href="/dashboard">View Dashboard</a>
+                        {% else %}
+                            <a href="/login" class="btn btn-outline-secondary btn-lg px-4 btn-custom">Log in</a>
+                            <a href="/register-part1" class="btn btn-primary btn-lg px-4 me-md-2">Sign up</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="px-4 py-5 my-5 text-center section">
+        <h1>Ready to Get Started on Your Fitness Journey?</h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">
+                Take the first step toward a healthier, stronger, and more confident you. With our all-in-one
+                platform, you can track your progress, create personalized meal plans, and stay consistent
+                with your workouts. Don’t wait for tomorrow—your journey starts today. Sign up now and let’s
+                achieve your goals together.
+            </p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                {% if session["user_id"] %}
+                    <a class="btn btn-primary btn-lg px-4 me-md-2" href="/dashboard">View Dashboard</a>
+                {% else %}
+                    <a href="/login" class="btn btn-outline-secondary btn-lg px-4 btn-custom">Log in</a>
+                    <a href="/register-part1" class="btn btn-primary btn-lg px-4 me-md-2">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+

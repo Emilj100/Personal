@@ -1,0 +1,73 @@
+{% extends "dashboard/dashboard_layout.html" %}
+
+{% block title %}Personal Settings{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h2 class="mb-4">Personal Settings</h2>
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    <!-- Form for updating personal settings -->
+    <form method="post" action="/settings">
+        <!-- CSRF token for protection -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <!-- Update Personal Information -->
+        <h5>Update Personal Information</h5>
+        <div class="mb-3">
+            <label for="age" class="form-label">Age</label>
+            <input type="number" class="form-control" id="age" name="age" value="{{ user.age }}">
+        </div>
+        <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <select class="form-select" id="gender" name="gender">
+                <option value="Male" {% if user.gender == 'Male' %}selected{% endif %}>Male</option>
+                <option value="Female" {% if user.gender == 'Female' %}selected{% endif %}>Female</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="height" class="form-label">Height (cm)</label>
+            <input type="number" step="0.1" class="form-control" id="height" name="height" value="{{ user.height }}">
+        </div>
+
+        <!-- Update Goals -->
+        <h5>Update Goals</h5>
+        <div class="mb-3">
+            <label for="goal_type" class="form-label">Goal</label>
+            <select class="form-select" id="goal_type" name="goal_type">
+                <option value="lose weight" {% if user.goal_type == 'lose weight' %}selected{% endif %}>Lose Weight</option>
+                <option value="gain weight" {% if user.goal_type == 'gain weight' %}selected{% endif %}>Gain Weight</option>
+                <option value="stay at current weight" {% if user.goal_type == 'stay at current weight' %}selected{% endif %}>Stay at Current Weight</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="goal_weight" class="form-label">Goal Weight (kg)</label>
+            <input type="number" step="0.1" class="form-control" id="goal_weight" name="goal_weight" value="{{ user.goal_weight }}">
+        </div>
+
+        <!-- Update Experience Level & Training Plan -->
+        <h5>Update Experience Level & Training Plan</h5>
+        <div class="mb-3">
+            <label for="experience_level" class="form-label">Experience Level</label>
+            <select class="form-select" id="experience_level" name="experience_level">
+                <option value="Beginner" {% if user.experience_level == 'Beginner' %}selected{% endif %}>Beginner</option>
+                <option value="Intermediate" {% if user.experience_level == 'Intermediate' %}selected{% endif %}>Intermediate</option>
+                <option value="Advanced" {% if user.experience_level == 'Advanced' %}selected{% endif %}>Advanced</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="training_days" class="form-label">Training Days per Week</label>
+            <select class="form-select" id="training_days" name="training_days">
+                {% for day in range(1, 8) %}
+                    <option value="{{ day }}" {% if user.training_days == day %}selected{% endif %}>{{ day }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+    </form>
+</div>
+{% endblock %}
+
+

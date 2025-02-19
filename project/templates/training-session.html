@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Training Session
+{% endblock %}
+
+{% block main %}
+<!-- Training Session Header -->
+<div class="container my-5">
+    <h2 class="text-center mb-4">Training Session: Day {{ day_info.day_number }} - {{ day_info.day_name }}</h2>
+    <p class="text-center text-muted">Log the weights you used for each exercise below.</p>
+
+    <!-- Training Session Form -->
+    <form action="/trainingsession" method="post">
+        <!-- CSRF Token: Ensures the form is protected against CSRF attacks -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <!-- Exercises Table -->
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Exercise</th>
+                    <th>Sets x Reps</th>
+                    <th>Weight (kg)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through each exercise in training_data and display as table rows -->
+                {% for exercise in training_data %}
+                <tr>
+                    <td>{{ exercise.exercise_name }}</td>
+                    <td>{{ exercise.sets }} x {{ exercise.reps }}</td>
+                    <td>
+                        <input type="number" name="{{ exercise.exercise_name }}" class="form-control" value="{{ exercise.weight }}" min="0" required>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- End Training Button -->
+        <div class="text-center mt-5">
+            <button type="submit" class="btn btn-danger btn-lg">End Training</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

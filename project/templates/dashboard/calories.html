@@ -1,0 +1,131 @@
+{% extends "dashboard/dashboard_layout.html" %}
+{% block title %}Calorie Insights{% endblock %}
+
+{% block main %}
+
+
+<div class="container mt-4">
+    <div class="mt-4">
+        <h2 class="mb-2 fw-bold">Optimize your weekly calorie intake, {{ user_name | title }}! 🔥</h2>
+        <p class="text-muted">
+            Nutrition statistics for this week (starting {{ start_of_week }})
+        </p>
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="row">
+        <!-- Average Daily Intake -->
+        <div class="col-md-4">
+            <div class="card text-center p-4 shadow-sm">
+                <i class="bi bi-fire fs-2 text-danger"></i>
+                <h5 class="mt-3">Average Daily Intake</h5>
+                <h3 class="fw-bold">
+                    {% if average_daily_intake == "No data yet" %}
+                        {{ average_daily_intake }}
+                    {% else %}
+                        {{ average_daily_intake }} kcal
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+        <!-- Planned vs. Actual -->
+        <div class="col-md-4">
+            <div class="card text-center p-4 shadow-sm">
+                <i class="bi bi-clipboard-check fs-2 text-success"></i>
+                <h5 class="mt-3">Planned vs. Actual</h5>
+                <h3 class="fw-bold">
+                    {% if planned_vs_actual < 0 %}
+                        {{ planned_vs_actual }} kcal deficit
+                    {% else %}
+                        +{{ planned_vs_actual }} kcal surplus
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+        <!-- Average Protein Intake -->
+        <div class="col-md-4">
+            <div class="card text-center p-4 shadow-sm">
+                <i class="bi bi-basket fs-2 text-primary"></i>
+                <h5 class="mt-3">Avg. Protein Intake</h5>
+                <h3 class="fw-bold">
+                    {% if avg_protein_intake == "No data yet" %}
+                        {{ avg_protein_intake }}
+                    {% else %}
+                        {{ avg_protein_intake }} g/day
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Best & Worst Day -->
+    <div class="mt-4 p-4 bg-white rounded shadow-sm text-center">
+        <h5 class="fw-bold">Best & Worst Day</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <div class="p-3 border rounded shadow-sm">
+                    <h6 class="fw-bold text-success">Best Day</h6>
+                    <p class="mb-0">
+                        {% if best_day %}
+                            {{ best_day.weekday }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </p>
+                    <h4 class="fw-bold">
+                        {% if best_day %}
+                            {{ best_day.total_calories }} kcal
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </h4>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 border rounded shadow-sm">
+                    <h6 class="fw-bold text-danger">Worst Day</h6>
+                    <p class="mb-0">
+                        {% if worst_day %}
+                            {{ worst_day.weekday }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </p>
+                    <h4 class="fw-bold">
+                        {% if worst_day %}
+                            {{ worst_day.total_calories }} kcal
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphs -->
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h5 class="fw-bold">Caloric Intake - Current Week</h5>
+            <div class="ratio ratio-16x9 mobile-chart">
+              <canvas id="calorieChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h5 class="fw-bold">Daily Intake vs. Goal</h5>
+            <div class="ratio ratio-16x9 mobile-chart">
+              <canvas id="goalChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Minimal inline script to save data -->
+<script>
+    window.calorieData = {
+        days: {{ daily_data | tojson | safe }}.map(d => d.weekday),
+        calories: {{ daily_data | tojson | safe }}.map(d => d.total_calories),
+        calorieGoal: {{ calorie_goal | round(0) }}
+    };
+</script>
+{% endblock %}

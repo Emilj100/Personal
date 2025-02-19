@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+{% block title %}
+    Calorie Tracker
+{% endblock %}
+
+{% block main %}
+
+<!-- Hero Section -->
+<div class="container my-5 text-center">
+    <h1 class="display-4 mb-3 fw-bold">Calorie Tracker</h1>
+    <p class="lead text-muted">Keep track of your daily calorie intake and stay on track with your health goals!</p>
+</div>
+
+<!-- Calorie Stats -->
+<div class="container my-5">
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">Calories Consumed</h5>
+                    <p class="display-4 text-success fw-bold">{{ total_consumed }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">Daily Goal</h5>
+                    <p class="display-4 text-primary fw-bold">{{ calorie_goal }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">Remaining Calories</h5>
+                    <p class="display-4 text-danger fw-bold">{{ remaining_calories }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Input Section -->
+<div class="container my-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4">Add Food</h4>
+            <!-- Form to add food; CSRF token is included for protection -->
+            <form action="/calorietracker" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="action" value="add">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="E.g. '250g chicken, 1 banana'" aria-label="Food input" name="food" required>
+                    <button class="btn btn-primary" type="submit">Add Food</button>
+                </div>
+            </form>
+            {% if error %}
+            <div class="text-danger mb-3 text-center">
+                {{ error }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Tabs Section -->
+<div class="container my-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="foodLogTabs">
+                <li class="nav-item">
+                    <a class="nav-link active" id="food-log-tab" data-bs-toggle="tab" href="#food-log" role="tab">Food Log</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="nutrition-tab" data-bs-toggle="tab" href="#nutrition" role="tab">Nutritional Breakdown</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body tab-content">
+            <!-- Food Log Tab -->
+            <div class="tab-pane fade show active" id="food-log" role="tabpanel">
+                <ul class="list-group">
+                    {% for food in food_log %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ food.food_name }} {{ food.serving_qty }} {{ food.serving_unit }}
+                            <div>
+                                <span class="badge bg-success rounded-pill me-2">Kcal {{ food.calories }}</span>
+                                <!-- Delete Food Form with CSRF token -->
+                                <form action="/calorietracker" method="post" style="display: inline;">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="food_id" value="{{ food.id }}">
+                                    <button class="btn btn-sm btn-danger" type="submit">
+                                        <i class="bi bi-x-circle-fill"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Pie Chart Tab -->
+            <div class="tab-pane fade" id="nutrition" role="tabpanel">
+                <div class="text-center">
+                    <h5 class="mt-3">Nutritional Breakdown</h5>
+                    <span id="macro-proteins" style="display: none;">{{ macros.total_proteins | default(0) }}</span>
+                    <span id="macro-carbohydrates" style="display: none;">{{ macros.total_carbohydrates | default(0) }}</span>
+                    <span id="macro-fats" style="display: none;">{{ macros.total_fats | default(0) }}</span>
+
+                    <canvas id="nutritionPieChart" style="max-width: 300px; margin: auto;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

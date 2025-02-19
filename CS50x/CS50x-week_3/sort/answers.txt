@@ -1,0 +1,15 @@
+sort1 uses: Bubble sort
+
+How do you know?: Selection sort is usually faster than bubble sort. Which we can also see here.
+But on a already sorted list Bubble sort will be much faster than selection sort, since it only has to go through the list once.
+
+sort2 uses: Merge sort
+
+How do you know?: It was extremely fast compared to the other sorts. It was the fastest on all 3 tests
+
+sort3 uses: Selection sort
+
+How do you know?: Selection sort usually takes the same time no matter if the list is reversed, random or sorted.
+But it isnt as fast as merge sort so thats why this one gotta be selection sort.
+Since it takes the same time no matter the list then it gotta be this one, since sort1 was faster than usual on a alreader sorted list.
+
