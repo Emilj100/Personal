@@ -8,4 +8,7 @@
 
     {{ content|safe }}
 
+    <a href="{% url 'wiki:edit_page' title %}" class="btn btn-primary">Edit</a>
+
+
 {% endblock %}
