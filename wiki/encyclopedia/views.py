@@ -49,6 +49,7 @@ def new_page(request):
                     "error": "A page with the title already exist"
                 })
             
+        content = f"# {title}\n\n{content}"
         util.save_entry(title, content)
         entry = util.get_entry(title)
         if not entry:
@@ -59,10 +60,6 @@ def new_page(request):
             return render(request, "encyclopedia/entry.html", {
                 "content": markdown2.markdown(entry)
             })
-
-
-
-
 
     return render(request, "encyclopedia/new_page.html")
 
