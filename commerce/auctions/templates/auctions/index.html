@@ -3,5 +3,17 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    TODO
+    {% for auction in auctions %}
+    
+        {{ auction.title}}
+        {{ auction.description}}
+        {{ auction.startbid}}
+        {% if auction.image %}
+            <img src="{{ auction.image.url }}" alt="{{ auction.title }}">
+        {% else %}
+            No picture
+        {% endif %}
+        {{ auction.created_at }}
+
+    {% endfor %}
 {% endblock %}
