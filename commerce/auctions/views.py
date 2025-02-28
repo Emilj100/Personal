@@ -3,15 +3,124 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django import forms
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-from .models import User, Auction, Bid, Comment
 
+from .models import User, Auction, Bid, Comment, Category
+
+class Create(forms.Form):
+    title = forms.CharField(label="Title", max_length=64)
+    description = forms.CharField()
+    price = forms.DecimalField(max_digits=19, decimal_places=2)
+    image = forms.ImageField(required=False)
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="Select a category", required=False)
+
+class Make_bid(forms.Form):
+    bid = forms.DecimalField(max_digits=19, decimal_places=2)
 
 def index(request):
     return render(request, "auctions/index.html", {
-        "auctions": Auction.objects.all()
+        "auctions": Auction.objects.exclude(is_active=False).all()
     })
 
+def listing(request, auction_id):
+    auction = Auction.objects.get(pk=auction_id)
+    highest_bid = Bid.objects.filter(auction=auction).order_by('-amount').first()
+
+    if request.user == auction.the_creator and auction.is_active:
+        close = True
+    else:
+        close = False
+
+    if request.user == auction.winner and not auction.is_active:
+        winner = True
+    else:
+        winner = False
+
+    return render(request, "auctions/listing.html", {
+        "auction": auction,
+        "bid": highest_bid,
+        "form": Make_bid(),
+        "close": close,
+        "winner": winner,
+    })
+
+def close(request, auction_id):
+    if request.method == "POST":
+        auction = Auction.objects.get(pk=auction_id)
+        highest_bid = Bid.objects.filter(auction=auction).order_by('-amount').first()
+        
+        if highest_bid:
+            auction.winner = highest_bid.bidder
+        
+        auction.is_active = False
+        auction.save()
+        
+        return HttpResponseRedirect(reverse("listing", args=[auction_id]))
+
+
+@login_required
+def bid(request, auction_id):
+    if request.method == "POST":
+        form = Make_bid(request.POST)
+        if form.is_valid():
+            bid_value = form.cleaned_data["bid"]
+            auction = Auction.objects.get(pk=auction_id)
+            current_bid_object = Bid.objects.filter(auction=auction).order_by('-amount').first()
+
+            if not current_bid_object:
+                if bid_value < auction.startbid:
+                    messages.warning(request, "Your bid must be at least the starting bid.")
+                    return HttpResponseRedirect(reverse("listing", args=[auction_id]))
+            else:
+                if bid_value <= current_bid_object.amount:
+                    messages.warning(request, "Please place a higher bid than the current bid.")
+                    return HttpResponseRedirect(reverse("listing", args=[auction_id]))
+                    
+            Bid.objects.create(
+                amount=bid_value,
+                bidder=request.user,
+                auction=auction
+            )
+            messages.success(request, "Your bid was placed")
+            return HttpResponseRedirect(reverse("listing", args=[auction_id]))
+        else:
+            return render(request, "auctions/listing.html", {"form": form})
+
+
+
+@login_required
+def create(request):
+    if request.method == "POST":
+        form = Create(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            description = form.cleaned_data["description"]
+            price = form.cleaned_data["price"]
+            image = form.cleaned_data["image"]
+            category = form.cleaned_data["category"]
+        else:
+            return render(request, "auctions/create.html", {
+                "form": form
+            })
+        
+        Auction.objects.create(
+        title=title,
+        description=description,
+        startbid=price,
+        image=image,
+        category=category,
+        the_creator=request.user
+        )
+        messages.success(request, "Your auction was successfully created!")
+        return HttpResponseRedirect(reverse("index"))
+
+
+    return render(request, "auctions/create.html", {
+        "form": Create()
+    })
 
 def login_view(request):
     if request.method == "POST":
