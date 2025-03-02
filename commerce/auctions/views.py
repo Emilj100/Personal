@@ -20,6 +20,9 @@ class Create(forms.Form):
 class Make_bid(forms.Form):
     bid = forms.DecimalField(max_digits=19, decimal_places=2)
 
+class Comments(forms.Form):
+    comment = forms.CharField(label="Comment")
+
 def index(request):
     return render(request, "auctions/index.html", {
         "auctions": Auction.objects.exclude(is_active=False).all()
@@ -28,6 +31,7 @@ def index(request):
 def listing(request, auction_id):
     auction = Auction.objects.get(pk=auction_id)
     highest_bid = Bid.objects.filter(auction=auction).order_by('-amount').first()
+    comments = Comment.objects.filter(auction=auction)
 
     if request.user == auction.the_creator and auction.is_active:
         close = True
@@ -39,14 +43,81 @@ def listing(request, auction_id):
     else:
         winner = False
 
+    if auction in request.user.watchlist.all():
+        in_watchlist = True
+    else:
+        in_watchlist = False
+
     return render(request, "auctions/listing.html", {
         "auction": auction,
         "bid": highest_bid,
         "form": Make_bid(),
+        "comment_form": Comments(),
         "close": close,
         "winner": winner,
+        "comments": comments,
+        "watchlist": in_watchlist
     })
 
+def category(request, name):
+    category_object = Category.objects.get(name=name)
+    auctions = Auction.objects.filter(category=category_object, is_active=True)
+    return render(request, "auctions/category.html", {
+        "auctions": auctions,
+        "category": category_object
+    })
+
+
+def all_categories(request):
+    categories = Category.objects.all()
+    return render(request, "auctions/all_categories.html", {
+        "categories": categories
+    })
+
+@login_required
+def watchlist(request):
+    auction = request.user.watchlist.all()
+
+    return render(request, "auctions/watchlist.html", {
+        "auctions": auction
+    })
+
+@login_required
+def add_to_watchlist(request, auction_id):
+    if request.method == "POST":
+        auction = Auction.objects.get(pk=auction_id)
+
+        if auction in request.user.watchlist.all():
+            request.user.watchlist.remove(auction)
+            messages.success(request, "Listing removed from your watchlist.")
+            return HttpResponseRedirect(reverse("listing", args=[auction_id]))
+        else:
+            request.user.watchlist.add(auction)
+            messages.success(request, "Listing added to your watchlist.")
+            return HttpResponseRedirect(reverse("listing", args=[auction_id]))
+
+        
+@login_required
+def comment(request, auction_id):
+    if request.method == "POST":
+            auction = Auction.objects.get(pk=auction_id)
+            form = Comments(request.POST)
+            if form.is_valid():
+                comment = form.cleaned_data["comment"]
+
+            else:
+                messages.warning(request, "Something went wrong")
+                return HttpResponseRedirect(reverse("listing", args=[auction_id]))
+            
+            Comment.objects.create(
+                comment=comment,
+                commentator=request.user,
+                auction=auction
+            )
+            return HttpResponseRedirect(reverse("listing", args=[auction_id]))
+
+        
+@login_required
 def close(request, auction_id):
     if request.method == "POST":
         auction = Auction.objects.get(pk=auction_id)

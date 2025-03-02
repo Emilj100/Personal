@@ -1,0 +1,40 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2 class="mb-4">{{ category }}</h2>
+
+    {% if auctions %}
+        {% for auction in auctions %}
+            <div class="row g-0 mb-4 border rounded overflow-hidden shadow-sm flex-column flex-md-row" style="height: 350px;">
+                <div class="col-12 col-md-4" style="height: 350px;">
+                    <div class="d-flex align-items-center justify-content-center h-100">
+                        {% if auction.image %}
+                            <img 
+                                src="{{ auction.image.url }}" 
+                                class="img-fluid" 
+                                style="max-height: 100%; width: auto;" 
+                                alt="{{ auction.title }}"
+                            >
+                        {% else %}
+                            <h5>No picture</h5>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-8 d-flex flex-column p-4" style="height: 350px;">
+                    <h3 class="mb-3">{{ auction.title }}</h3>
+                    <h5 class="mb-3">Price: ${{ auction.current_bid }}</h5>
+                    <p class="mb-4">{{ auction.description }}</p>
+                    <a href="{% url 'listing' auction.id %}" class="btn btn-primary mb-3 align-self-start">View Details</a>
+                    <div class="mt-auto">
+                        <small class="text-muted">Created {{ auction.created_at }}</small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>There are no active listings in this category.</p>
+    {% endif %}
+</div>
+{% endblock %}
