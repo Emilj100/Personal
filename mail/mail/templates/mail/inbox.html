@@ -12,11 +12,13 @@
     <hr>
 
     <div id="emails-view">
-        <h3>TEST</h3>
+    </div>
+
+    <div id="email-detail">
     </div>
 
     <div id="compose-view">
-        <h3>New Email TEST</h3>
+        <h3>New Email</h3>
         <form id="compose-form">
             <div class="form-group">
                 From: <input disabled class="form-control" value="{{ request.user.email }}">
@@ -31,6 +33,7 @@
             <input type="submit" class="btn btn-primary"/>
         </form>
     </div>
+
 
 
 {% endblock %}
