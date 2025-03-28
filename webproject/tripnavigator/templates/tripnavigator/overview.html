@@ -1,0 +1,160 @@
+{% extends "tripnavigator/dashboard-layout.html" %}
+{% load static %}
+
+{% block title %}
+Trip Overview - {{ trip.title }}
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" /> 
+  <style>
+    /* Fjern ekstra horisontal padding på mobil */
+    @media (max-width: 576px) {
+      .container-fluid.no-px {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+    }
+    /* Juster kortets højde på ekstra små skærme */
+    @media (max-width: 576px) {
+      .map-card {
+        height: 300px !important;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid my-4 no-px">
+  <h2 class="mb-4 text-center text-md-start">Trip Overview</h2>
+  
+  <!-- Row 1: Trip Info og Selected Activities -->
+  <div class="row g-4 mb-4">
+    <!-- Trip Info -->
+    <div class="col-12 col-md-6">
+      <div class="card w-100" style="border: none; border-radius: 1rem; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        {% if trip.image %}
+          <div class="card-img-top" style="background: url('{{ trip.image.url }}') center/cover no-repeat; height: 200px;"></div>
+        {% else %}
+          <div class="card-img-top d-flex align-items-center justify-content-center" style="background: #ccc; height: 200px;">
+            <span>No image available</span>
+          </div>
+        {% endif %}
+        <div class="card-body" style="background: #fff; color: #000;">
+          <h3 class="card-title">{{ trip.title }}</h3>
+          <p>
+            <i class="bi bi-geo-alt-fill me-1"></i> {{ trip.destination }}<br>
+            <i class="bi bi-calendar-event me-1"></i> {{ trip.start_date|date:"Y-m-d" }} to {{ trip.end_date|date:"Y-m-d" }}<br>
+            <i class="bi bi-tag-fill me-1"></i> {{ trip.get_category_display }}<br>
+            <i class="bi bi-cash-stack me-1"></i> ${{ trip.budget }}
+          </p>
+          <p style="font-size: 0.95rem;">{{ trip.description }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Selected Activities -->
+    <div class="col-12 col-md-6">
+      <div class="card w-100" style="border: none; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: 100%;">
+        <div class="card-body">
+          <h5 class="card-title mb-3">
+            <i class="bi bi-check2-circle me-2 text-success"></i>Selected Activities
+          </h5>
+          <ul class="list-group">
+            {% for act in selected_activities %}
+              <li class="list-group-item">
+                <strong>{{ act.title }}</strong><br>
+                <small class="text-muted">
+                  {% if act.date %}{{ act.date|date:"Y-m-d" }}{% endif %}
+                  {% if act.address %} - {{ act.address }}{% endif %}
+                </small>
+              </li>
+            {% empty %}
+              <li class="list-group-item text-muted">No selected activities.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Row 2: Mindre Map-boks -->
+  <div class="row g-4">
+    <div class="col-12">
+      <!-- Kortet: fast højde (400px) og fuld bredde -->
+      <div class="card map-card w-100" style="border: none; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: 400px;">
+        <div class="card-body p-0 h-100" style="position: relative;">
+          <!-- Overskrift i kortet -->
+          <div class="p-3" style="z-index: 999; position: relative;">
+            <h5 class="card-title mb-2">
+              <i class="bi bi-map me-2 text-info"></i>Map Overview
+            </h5>
+            <p class="text-muted" style="font-size: 0.9rem;">Key points for your trip (selected activities)</p>
+          </div>
+          
+          <!-- Kortet (#map) fylder resten af kortet -->
+          <div id="map" style="
+            position: absolute;
+            top: 80px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border-radius: 1rem;
+          "></div>
+          
+          <!-- InfoBox (valgfri) -->
+          <div id="infoBox" style="
+            display: none;
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            width: 220px;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 999;
+          ">
+            <h6 id="infoTitle" class="mb-1"></h6>
+            <p id="infoDetails" class="mb-2" style="font-size: 0.9rem;"></p>
+            <button class="btn btn-sm btn-outline-secondary" onclick="closeInfoBox()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  
+  <!-- Overfør data fra Django til JavaScript -->
+  <script>
+    window.mapNavigationContext = {
+      destination: "{{ trip.destination|escapejs }}",
+      opencage_api_key: "{{ opencage_api_key }}",
+      activities: [
+        {% for act in selected_activities %}
+        {
+          id: "activity{{ act.id }}",
+          title: "{{ act.title|escapejs }}",
+          address: "{{ act.address|escapejs }}"
+        },
+        {% endfor %}
+      ]
+    };
+  </script>
+  
+  <!-- Indlæs ekstern JavaScript-fil (overview.js) -->
+  <script src="{% static 'tripnavigator/overview.js' %}"></script>
+  
+  <!-- Initialiser kortet, når DOM er klar -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      initOverview(window.mapNavigationContext);
+    });
+  </script>
+{% endblock %}

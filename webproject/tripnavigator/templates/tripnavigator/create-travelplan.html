@@ -1,0 +1,82 @@
+{% extends "tripnavigator/layout.html" %}
+{% load static %}
+
+{% block title %}Create Travel Plan{% endblock %}
+
+{% block header_wrapper %}
+<!-- Hero Section -->
+<div style="background-color: #fff;">
+  <div class="container-fluid p-0 position-relative" style="overflow: hidden; border-bottom-left-radius: 12rem; border-bottom-right-radius: 12rem;">
+    <div style="background: url('{% static 'tripnavigator/images/plan-hero.png' %}') center center / cover no-repeat; min-height: 70vh; position: relative;">
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
+      {{ block.super }}
+      <div class="position-absolute start-50 translate-middle-x text-center" style="top: 40%; z-index: 1;">
+        <h1 class="display-3 fw-bold text-white mb-3">Plan Your Journey, Your Way</h1>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="my-5">
+  <h2 class="mb-4">Create a New Travel Plan</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    
+    <!-- Rejseplan felter -->
+    <div class="mb-3">
+      <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+      {{ form.title }}
+      {{ form.title.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.destination.id_for_label }}" class="form-label">Destination</label>
+      {{ form.destination }}
+      {{ form.destination.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.image.id_for_label }}" class="form-label">Image (optional)</label>
+      {{ form.image }}
+      {{ form.image.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.start_date.id_for_label }}" class="form-label">Start Date</label>
+      {{ form.start_date }}
+      {{ form.start_date.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.end_date.id_for_label }}" class="form-label">End Date</label>
+      {{ form.end_date }}
+      {{ form.end_date.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+      {{ form.category }}
+      {{ form.category.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.budget.id_for_label }}" class="form-label">Budget (optional)</label>
+      {{ form.budget }}
+      {{ form.budget.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.description.id_for_label }}" class="form-label">Description (optional)</label>
+      {{ form.description }}
+      {{ form.description.errors }}
+    </div>
+    
+    <div class="mb-3">
+      <label for="{{ form.share_email.id_for_label }}" class="form-label">Share with Email (optional)</label>
+      {{ form.share_email }}
+      {{ form.share_email.errors }}
+    </div>
+    
+    <button type="submit" class="btn btn-dark">Create Travel Plan</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

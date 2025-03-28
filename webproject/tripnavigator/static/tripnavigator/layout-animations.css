@@ -1,0 +1,17 @@
+/* Definerer animationen: start udenfor skærmen (øverst) og glide ned til sin normale position */
+@keyframes slideDown {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Anvend animationen på header-elementet */
+  .header-animate {
+    animation: slideDown 1s ease-out forwards;
+  }
+  

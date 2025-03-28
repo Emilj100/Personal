@@ -1,0 +1,249 @@
+{% extends "tripnavigator/layout.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block header_wrapper %}
+<div class="container-fluid p-0" 
+     style="background: linear-gradient(135deg, #1FA2FF 0%, #12D8FA 100%);
+            border-bottom-left-radius: 10rem;
+            border-bottom-right-radius: 10rem;">
+  {{ block.super }}
+  
+  <!-- Hero-sektion specifik for index-siden -->
+  <div class="container py-5">
+    <div class="row align-items-center">
+      <!-- Venstre kolonne: Tekst og CTA -->
+      <div class="col-12 col-md-6 mb-4 mb-md-0 text-white text-center text-md-start slide-left">
+        <h1 class="display-4 fw-bold">Let's Plan Your Perfect Trip</h1>
+        <p class="lead">
+          Let our AI-powered platform guide you to unforgettable destinations and tailor-made travel plans.
+        </p>
+        {% if user.is_authenticated %}
+          <a class="btn btn-light btn-prim btn-xl" href="{% url 'trip-planner' %}">Trip Planner</a>
+        {% else %}
+          <a class="btn btn-light btn-prim btn-xl" href="{% url 'register' %}">Get started</a>
+        {% endif %}
+      </div>
+      <!-- Højre kolonne: Billede -->
+      <div class="col-12 col-md-6 text-center">
+        <img src="{% static 'tripnavigator/images/hero-globe-plane.png' %}" alt="Globe with plane" class="img-fluid slide-right">
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="fade-in">
+  <!-- Four Boxes Section, overlapping den blå gradient og den hvide baggrund -->
+  <div class="container position-relative" style="margin-top: -10rem;">
+    <div class="row g-4">
+      <!-- Box 1: 100+ Destinations -->
+      <div class="col-12 col-md-3">
+        <div class="card text-center shadow border-0 h-100" style="border-radius: 1rem; background: #fff; transition: transform 0.3s;">
+          <div class="card-body d-flex flex-column align-items-center justify-content-center">
+            <i class="bi bi-geo-alt-fill fs-1 mb-3 text-primary"></i>
+            <h2 class="card-title">100+ Destinations</h2>
+            <p class="card-text">Explore a world of possibilities.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Box 2: 10,000+ Trips Booked -->
+      <div class="col-12 col-md-3">
+        <div class="card text-center shadow border-0 h-100" style="border-radius: 1rem; background: #fff; transition: transform 0.3s;">
+          <div class="card-body d-flex flex-column align-items-center justify-content-center">
+            <i class="bi bi-airplane-fill fs-1 mb-3 text-success"></i>
+            <h2 class="card-title">10,000+ Trips Booked</h2>
+            <p class="card-text">Join thousands of happy travelers.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Box 3: 24/7 AI Assistance -->
+      <div class="col-12 col-md-3">
+        <div class="card text-center shadow border-0 h-100" style="border-radius: 1rem; background: #fff; transition: transform 0.3s;">
+          <div class="card-body d-flex flex-column align-items-center justify-content-center">
+            <i class="bi bi-chat-dots-fill fs-1 mb-3 text-warning"></i>
+            <h2 class="card-title">24/7 AI Assistance</h2>
+            <p class="card-text">Support anytime, anywhere.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Box 4: 95% Satisfaction -->
+      <div class="col-12 col-md-3">
+        <div class="card text-center shadow border-0 h-100" style="border-radius: 1rem; background: #fff; transition: transform 0.3s;">
+          <div class="card-body d-flex flex-column align-items-center justify-content-center">
+            <i class="bi bi-star-fill fs-1 mb-3 text-danger"></i>
+            <h2 class="card-title">95% Satisfaction</h2>
+            <p class="card-text">Trusted by our customers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container px-4 py-5" id="featured-3">
+    <!-- Overskrift og undertekst -->
+    <div class="mx-auto text-center mb-5" style="max-width: 36rem;">
+      <h1 class="pb-2 border-bottom">Discover Our Services</h1>
+      <p class="mt-3 lead text-muted">
+        Find the best deals on Flights, Hotels, and Experiences tailored to your travel needs.
+      </p>
+    </div>
+    <!-- Nøgletal/Info-bokse -->
+    <div class="container mx-auto mt-5 mt-lg-6" style="max-width: 60rem;">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-5 gy-4">
+        <!-- Boks 1: Flights -->
+        <div class="col">
+          <div class="text-center">
+            <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-gradient rounded-circle fs-2 mb-3" style="width: 4rem; height: 4rem;">
+              <i class="bi bi-airplane-fill text-white"></i>
+            </div>
+            <h3 class="fs-2 text-body-emphasis">Flights</h3>
+            <p>Search and compare flights to get the best deals for your journey.</p>
+          </div>
+        </div>
+        <!-- Boks 2: Hotels -->
+        <div class="col">
+          <div class="text-center">
+            <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-gradient rounded-circle fs-2 mb-3" style="width: 4rem; height: 4rem;">
+              <i class="bi bi-building text-white"></i>
+            </div>
+            <h3 class="fs-2 text-body-emphasis">Hotels</h3>
+            <p>Discover comfortable and affordable accommodations worldwide.</p>
+          </div>
+        </div>
+        <!-- Boks 3: Experiences -->
+        <div class="col">
+          <div class="text-center">
+            <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-gradient rounded-circle fs-2 mb-3" style="width: 4rem; height: 4rem;">
+              <i class="bi bi-heart-fill text-white"></i>
+            </div>
+            <h3 class="fs-2 text-body-emphasis">Experiences</h3>
+            <p>Book unique experiences and tours that make your trip unforgettable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Samlet Call to Action-knap -->
+    <div class="text-center mt-5">
+      {% if user.is_authenticated %}
+        <a class="btn btn-dark btn-xl btn-border" href="{% url 'trip-planner' %}">Trip Planner</a>
+      {% else %}
+        <a class="btn btn-dark btn-xl btn-border" href="{% url 'register' %}">Get started</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="container my-5 shadow p-5" style="border-radius: 3rem;" id="popular-destinations">
+  <!-- Overskrift og undertekst -->
+  <h2 class="pb-2 border-bottom">Popular Destinations</h2>
+  <p class="text-muted">Get inspiration for your next journey</p>
+  <!-- Start row -->
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mt-4">
+    <!-- Destination 1 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-left scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/Dubai.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Dubai</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Destination 2 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-left scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/London.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">London</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Destination 3 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-right scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/Japan.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Japan</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Destination 4 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-right scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/Bali.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Bali</h4>
+        </div>
+      </div>
+    </div>
+  </div> <!-- End row -->
+</div> <!-- End container -->
+
+<div class="row flex-lg-row-reverse align-items-center g-5" style="padding-bottom: 10rem;">
+  <!-- Venstre kolonne: Billede (slide in from right) -->
+  <div class="col-12 col-sm-10 col-lg-6 text-center scroll-animate slide-right">
+    <img src="{% static 'tripnavigator/images/travel.png' %}" class="d-block mx-lg-auto img-fluid" style="border-radius: 2rem;" alt="Take Off with Confidence" width="700" height="500" loading="lazy">
+  </div>
+  <!-- Højre kolonne: Tekst (slide in from left) -->
+  <div class="col-12 col-lg-6 scroll-animate slide-left text-center text-lg-start">
+    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Plan Your Entire Trip From Start to Finish</h1>
+    <p class="lead">
+      Our platform lets you discover exciting destinations, compare flight and hotel options, and craft a personalized itinerary—all in one place.
+    </p>
+    <p class="lead">
+      Enjoy a seamless experience from initial inspiration to final booking. Start planning your journey with ease and confidence.
+    </p>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+      {% if user.is_authenticated %}
+        <a class="btn btn-dark btn-xl btn-border" href="{% url 'trip-planner' %}">Trip Planner</a>
+      {% else %}
+        <a class="btn btn-dark btn-xl btn-border" href="{% url 'register' %}">Get started</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="row align-items-center g-5" style="padding-bottom: 10rem;">
+  <!-- Venstre kolonne: Billede (slide in from left) -->
+  <div class="col-12 col-sm-10 col-lg-6 text-center scroll-animate slide-left">
+    <img src="{% static 'tripnavigator/images/ai.png' %}" class="d-block mx-lg-auto img-fluid" style="border-radius: 2rem;" alt="Meet Your Travel AI Assistant" width="700" height="500" loading="lazy">
+  </div>
+  <!-- Højre kolonne: Tekst (slide in from right) -->
+  <div class="col-12 col-lg-6 scroll-animate slide-right text-center text-lg-start">
+    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Meet Your Travel AI Assistant</h1>
+    <p class="lead">
+      Our AI is designed to transform the way you plan your trips. By analyzing your preferences and travel history, it delivers personalized recommendations for destinations, flights, hotels, and experiences. With intuitive suggestions and smart itinerary planning, our AI ensures your journey is perfectly tailored to your unique style.
+    </p>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+      {% if user.is_authenticated %}
+        <a class="btn btn-dark btn-xl btn-border" href="{% url 'trip-planner' %}">Trip Planner</a>
+      {% else %}
+        <a class="btn btn-dark btn-xl btn-border" href="{% url 'register' %}">Get started</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block full_width_content %}
+<div class="container-fluid bg-light m-0 p-0">
+  <div class="w-100 py-5 text-center">
+    <h1 class="display-5 fw-bold text-body-emphasis">Ready to Get Started?</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">
+        Take the next step towards planning your dream trip. Our all‑in‑one platform lets you explore inspiring destinations, customize your itinerary, and book your journey with confidence.
+      </p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        {% if user.is_authenticated %}
+          <a class="btn btn-dark btn-xl btn-border" href="{% url 'trip-planner' %}">Trip Planner</a>
+        {% else %}
+          <a class="btn btn-dark btn-xl btn-border" href="{% url 'register' %}">Get started</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

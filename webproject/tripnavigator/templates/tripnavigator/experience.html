@@ -1,0 +1,226 @@
+{% extends "tripnavigator/layout.html" %}
+{% load static %}
+
+{% block title %}Experiences{% endblock %}
+
+{% block header_wrapper %}
+<!-- Hero-sektion -->
+<div style="background-color: #fff;">
+  <div class="container-fluid p-0 position-relative" style="overflow: hidden; border-bottom-left-radius: 12rem; border-bottom-right-radius: 12rem;">
+    <div style="background: url('{% static 'tripnavigator/images/experience-hero.png' %}') center center / cover no-repeat; min-height: 70vh; position: relative;">
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
+      {{ block.super }}
+      <div class="position-absolute start-50 translate-middle-x text-center" style="top: 40%; z-index: 1;">
+        <!-- Desktop overskrift -->
+        <h1 class="d-none d-md-block display-3 fw-bold text-white mb-3">
+          Experience the World, One Adventure at a Time
+        </h1>
+        <!-- Mobil overskrift -->
+        <h1 class="d-block d-md-none display-4 fw-bold text-white mb-3">
+          Experience the World, One Adventure at a Time
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Experience Search Form -->
+<div class="container position-relative" style="margin-top: -8rem; z-index: 2;">
+  <div class="mx-auto bg-white text-dark p-4 shadow position-relative" style="max-width: 1300px; width: 100%; border-radius: 3rem;">
+    <!-- TripAdvisor-logo i øverste højre hjørne -->
+    <img src="{% static 'tripnavigator/images/tripadvisor-logo.png' %}" alt="TripAdvisor" 
+         style="position: absolute; top: 1.5rem; right: 2rem; max-height: 25px; z-index: 10;">
+    <form id="experience-form">
+      <div class="mb-3">
+        <label for="city" class="form-label fw-semibold">City</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="city" name="city" autocomplete="off" placeholder="Enter city (e.g., Copenhagen)">
+          <button type="submit" class="btn btn-dark d-none d-md-block">
+            <i class="bi bi-search fs-5"></i> Search Experiences
+          </button>
+          <button type="submit" class="btn btn-dark btn-sm d-block d-md-none">
+            <i class="bi bi-search fs-5"></i>
+          </button>
+        </div>        
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Experience Results Container -->
+<div class="container py-5" id="experience-results">
+  <!-- Her indsættes resultaterne -->
+</div>
+
+<!-- Planning Guide Section -->
+<div class="bg-white py-5">
+  <div class="container px-3">
+    <!-- Header Section for Planning Guide -->
+    <div class="text-center">
+      <h2 class="text-uppercase text-primary fw-semibold">Plan Your Experience</h2>
+      <p class="mt-2 display-4 fw-bold text-dark">
+        Everything you need to book the perfect experience
+      </p>
+      <p class="mt-3 lead text-muted">
+        Follow our simple steps to discover, compare, plan, and book unforgettable adventures.
+      </p>
+    </div>
+
+    <!-- Planning Guide Steps -->
+    <div class="mt-5" style="padding-bottom: 10rem;">
+      <div class="row g-4">
+        <!-- Step 1: Discover Experiences -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-1-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Discover Experiences</h5>
+              <p class="text-muted mb-0">
+                Browse a curated selection of experiences, from cultural tours to thrilling outdoor adventures.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Step 2: Compare Options -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-2-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Compare Options</h5>
+              <p class="text-muted mb-0">
+                Read reviews, check ratings, and compare prices to find the best match for your interests and budget.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Step 3: Plan Your Itinerary -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-3-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Plan Your Itinerary</h5>
+              <p class="text-muted mb-0">
+                Organize your day with our intuitive planning tools, ensuring you make the most of every moment.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Step 4: Book with Confidence -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-4-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Book with Confidence</h5>
+              <p class="text-muted mb-0">
+                Enjoy secure, hassle-free booking with all the details you need at your fingertips.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div> <!-- end row -->
+    </div>
+  </div>
+</div>
+
+<!-- Section: Embrace Every Moment -->
+<div class="row flex-lg-row-reverse align-items-center g-5" style="padding-bottom: 10rem;">
+  <!-- Left Column: Image -->
+  <div class="col-10 col-sm-8 col-lg-6 scroll-animate slide-right mx-auto">
+    <img src="{% static 'tripnavigator/images/embrace-moment.png' %}" class="d-block mx-auto img-fluid" style="border-radius: 2rem;" alt="Embrace Every Moment" width="700" height="500" loading="lazy">
+  </div>
+  <!-- Right Column: Text -->
+  <div class="col-12 col-lg-6 scroll-animate slide-left text-center text-lg-start">
+    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Embrace Every Moment</h1>
+    <p class="lead">
+      Whether you're a seasoned traveler or embarking on your first adventure, every experience offers the chance to create lasting memories.
+    </p>
+    <p class="lead">
+      Our guide provides inspiration and practical tips to help you choose experiences that capture the true essence of your destination, allowing you to enjoy both renowned attractions and the special details that make each journey unique.
+    </p>
+  </div>
+</div>
+
+<!-- Planning Guide Gallery Section -->
+<div class="container my-5 shadow p-5" style="border-radius: 3rem; background-color: #000;" id="planning-guide">
+  <!-- Header Section -->
+  <div class="text-center text-white">
+    <h2 class="pb-2 border-bottom border-white">Plan Your Experience</h2>
+    <p class="mt-3 lead">
+      Choose experiences that match your passions and personality to create unforgettable memories.
+    </p>
+  </div>
+  <!-- Gallery: Responsive columns -->
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mt-4">
+    <!-- Step 1: Cultural Exploration -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-left scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/cultural-exploration1.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Cultural Exploration</h4>
+          <p class="small">Discover museums, historic landmarks, and vibrant traditions that define a destination.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Step 2: Outdoor Adventures -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-left scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/outdoor-adventures.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Outdoor Adventures</h4>
+          <p class="small">Experience thrilling hikes, water sports, and scenic landscapes that inspire awe.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Step 3: Relaxation & Wellness -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-right scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/relaxation-wellness.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Relaxation &amp; Wellness</h4>
+          <p class="small">Unwind in serene settings, indulge in spa retreats, and reconnect with yourself.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Step 4: Entertainment & Arts -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-right scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/entertainment-arts.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Entertainment &amp; Arts</h4>
+          <p class="small">Immerse yourself in live performances, art exhibitions, and creative experiences.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI Assistant Section -->
+<div class="container" style="padding-top: 10rem; padding-bottom: 3rem;">
+  <div class="row align-items-center">
+    <div class="col-12 col-md-7 text-center text-md-start">
+      <h2 class="fw-bold mb-3">Need help to find a great experience?</h2>
+      <p class="lead">
+        Ask our AI assistant for personalized recommendations and plan your perfect adventure. It's fast, smart, and always ready to help!
+      </p>
+      <a href="{% url 'ai_chat' %}" class="btn btn-dark btn-xl btn-border">Ask Our AI</a>
+    </div>
+    <div class="col-12 col-md-5 text-center">
+      <img src="{% static 'tripnavigator/images/ai-idea.png' %}" alt="AI Assistant" class="img-fluid" style="max-width: 300px;">
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'tripnavigator/experience.js' %}"></script>
+{% endblock %}

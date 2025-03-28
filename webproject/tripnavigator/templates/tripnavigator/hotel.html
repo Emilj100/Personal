@@ -1,0 +1,219 @@
+{% extends "tripnavigator/layout.html" %}
+{% load static %}
+
+{% block title %}Hotels{% endblock %}
+
+{% block script %}
+  <script src="{% static 'tripnavigator/hotel.js' %}"></script>
+{% endblock %}
+
+{% block header_wrapper %}
+<!-- Wrapper med hvid baggrund -->  
+<div style="background-color: #fff;">
+  <div class="container-fluid p-0 position-relative" 
+       style="overflow: hidden; border-bottom-left-radius: 12rem; border-bottom-right-radius: 12rem;">
+    <div style="background: url('{% static 'tripnavigator/images/hotel-hero.png' %}') center center / cover no-repeat; 
+                min-height: 70vh; position: relative;">
+      <!-- Mørkt overlay -->
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
+      
+      <!-- base.html’s header via block.super -->
+      {{ block.super }}
+      
+      <!-- Hero-overskrift -->
+      <div class="position-absolute start-50 translate-middle-x text-center" style="top: 40%; z-index: 1;">
+        <!-- Desktop: display-3, skjult på små skærme -->
+        <h1 class="d-none d-md-block display-3 fw-bold text-white mb-3">
+          Your Perfect Stay Awaits
+        </h1>
+        <!-- Mobil: display-4, kun vist på små skærme -->
+        <h1 class="d-block d-md-none display-4 fw-bold text-white mb-3">
+          Your Perfect Stay Awaits
+        </h1>
+      </div>      
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block hero %}{% endblock %}
+
+{% block content %}
+<!-- Travelpayouts hotel-script -->
+<div id="widget-container" class="container position-relative d-flex d-md-block justify-content-center" style="margin-top: -10rem; z-index: 2;"></div>
+
+<!-- Baggrund med tekst og "Plan Your Stay" sektion -->
+<div class="bg-white py-5">
+  <div class="container px-3">
+    <!-- Header Section for Hotel Planning Guide -->
+    <div class="text-center">
+      <h2 class="text-uppercase text-primary fw-semibold">Plan Your Stay</h2>
+      <p class="mt-2 display-4 fw-bold text-dark">
+        Everything you need to secure the perfect hotel
+      </p>
+      <p class="mt-3 lead text-muted">
+        Follow our simple steps to discover, compare, and book accommodation that fits your lifestyle.
+      </p>
+    </div>
+
+    <!-- Planning Guide Steps -->
+    <div class="mt-5" style="padding-bottom: 10rem;">
+      <div class="row g-4">
+        <!-- Step 1: Discover Accommodations -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-1-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Discover Accommodations</h5>
+              <p class="text-muted mb-0">
+                Browse a wide selection of hotels, resorts, and boutique stays tailored to your taste.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Step 2: Compare Reviews & Prices -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-2-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Compare Reviews & Prices</h5>
+              <p class="text-muted mb-0">
+                Check guest ratings and prices to choose the best value and comfort.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Step 3: Select the Ideal Location -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-3-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Select the Ideal Location</h5>
+              <p class="text-muted mb-0">
+                Choose a hotel in the perfect area – close to the attractions and amenities that matter to you.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Step 4: Book with Confidence -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-4-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Book with Confidence</h5>
+              <p class="text-muted mb-0">
+                Enjoy a secure, hassle-free booking experience with all the details you need.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div> <!-- end row -->
+    </div>
+  </div>
+</div>
+
+<!-- Sektion med billede til højre på store skærme (flex-lg-row-reverse) -->
+<div class="row flex-lg-row-reverse align-items-center g-5" style="padding-bottom: 10rem;">
+  <!-- Billede (slide in from right) -->
+  <div class="col-12 col-sm-8 col-lg-6 scroll-animate slide-right mx-auto mx-lg-0">
+    <img src="{% static 'tripnavigator/images/hotel-lobby.png' %}" 
+         class="d-block mx-lg-auto img-fluid" 
+         style="border-radius: 2rem;" 
+         alt="Relax and Unwind" 
+         width="700" height="500" loading="lazy">
+  </div>
+  <!-- Tekst (slide in from left) -->
+  <div class="col-12 col-lg-6 scroll-animate slide-left text-center text-lg-start">
+    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Relax and Unwind</h1>
+    <p class="lead">
+      Whether you're traveling for business or leisure, your hotel stay sets the tone for your trip.
+    </p>
+    <p class="lead">
+      Our guide inspires you with practical tips to choose accommodations that let you relax, recharge, and enjoy every moment.
+    </p>
+  </div>
+</div>
+
+<!-- Sort baggrund med hotel-eksempler i 4 kolonner på md+ -->
+<div class="container my-5 shadow p-5" style="border-radius: 3rem; background-color: #000;" id="planning-guide">
+  <!-- Header Section -->
+  <div class="text-center text-white">
+    <h2 class="pb-2 border-bottom border-white">Plan Your Stay</h2>
+    <p class="mt-3 lead">
+      Choose a hotel that reflects your style and meets your travel needs for a truly memorable experience.
+    </p>
+  </div>
+  
+  <!-- Hotels galleri: row-cols-1 row-cols-sm-2 row-cols-md-4 -->
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mt-4">
+    <!-- Hotel 1 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-left scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/hotel-1.png' %}'); background-size: cover; 
+                  background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Burj Al Arab, Dubai</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Hotel 2 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-left scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/hotel-2.png' %}'); background-size: cover; 
+                  background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Raffles Hotel, Singapore</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Hotel 3 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-right scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/hotel-3.png' %}'); background-size: cover; 
+                  background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">The Plaza Hotel, New York City</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Hotel 4 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-right scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/hotel-4.png' %}'); background-size: cover; 
+                  background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Claridge's, London</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sidste sektion: "Need help finding the perfect stay?" -->
+<div class="container py-5">
+  <div class="row align-items-center">
+    <!-- Venstre side: Tekst -->
+    <div class="col-12 col-md-7 text-center text-md-start">
+      <h2 class="fw-bold mb-3">Need help finding the perfect stay?</h2>
+      <p class="lead">
+        Ask our AI assistant for personalized hotel recommendations and plan your ideal getaway.
+        It's fast, smart, and always ready to help you secure the perfect accommodation.
+      </p>
+      <a href="{% url 'ai_chat' %}" class="btn btn-dark btn-xl btn-border">Ask Our AI</a>
+    </div>
+    <!-- Højre side: Billede/ikon -->
+    <div class="col-12 col-md-5 text-center mt-4 mt-md-0">
+      <img src="{% static 'tripnavigator/images/ai-idea.png' %}" alt="AI Assistant" 
+           class="img-fluid" style="max-width: 300px;">
+    </div>
+  </div>
+</div>
+{% endblock %}

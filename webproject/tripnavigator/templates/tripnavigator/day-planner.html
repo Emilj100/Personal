@@ -1,0 +1,115 @@
+{% extends "tripnavigator/dashboard-layout.html" %}
+{% load static %}
+
+{% block title %}Day Planner - {{ travel_plan.title }}{% endblock %}
+
+{% block css %}
+  <link href="{% static 'tripnavigator/day-planner.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid no-px">
+  <h2 class="mb-4 fw-bold">Day Planner for {{ travel_plan.title }}</h2>
+  
+  <div class="row">
+    <!-- Venstre kolonne: For hver dag vises planlagte aktiviteter -->
+    <div class="col-lg-8">
+      <!-- Omslut dag-kort med days-container -->
+      <div class="days-container">
+        {% for entry in timeline_data %}
+          <div class="card mb-3">
+            <!-- Drop-target: header fungerer som drop zone, uanset om kortet er foldet ud -->
+            <div class="card-header drop-target" data-date="{{ entry.date|date:'Y-m-d' }}" data-bs-toggle="collapse" data-bs-target="#day{{ entry.date|date:'Ymd' }}" aria-expanded="false">
+              <h5 class="mb-0">Day: {{ entry.date|date:"l, d F Y" }}</h5>
+            </div>
+            <div id="day{{ entry.date|date:'Ymd' }}" class="collapse">
+              <!-- Aktivitetscontainer: Har id og data-date -->
+              <div class="card-body day-activities" id="day-activities-{{ entry.date|date:'Y-m-d' }}" data-date="{{ entry.date|date:'Y-m-d' }}">
+                <h6 class="mb-3">Planned Activities</h6>
+                {% if entry.activities %}
+                  {% for activity in entry.activities %}
+                    <div class="activity-item" data-activity-id="{{ activity.id }}" draggable="true">
+                      <span class="delete-activity">×</span>
+                      {% if activity.start_time %}
+                        <strong>{{ activity.start_time|time:"H:i" }}</strong>
+                      {% endif %}
+                      – {{ activity.title }}
+                      {% if activity.end_time %}
+                        (Ends: {{ activity.end_time|time:"H:i" }})
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <p class="text-muted">No activities planned for this day.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <!-- Højre kolonne: Unassigned Activities & Create New Activity -->
+    <div class="col-lg-4">
+      <!-- Unassigned Activities -->
+      <!-- Vi anvender scroll direkte på containeren via CSS -->
+      <div class="unassigned-activities">
+        <h5 class="mb-3">Unassigned Activities</h5>
+        {% for activity in unassigned_activities %}
+          <div class="activity-item" data-activity-id="{{ activity.id }}" draggable="true">
+            <span class="delete-activity">×</span>
+            {{ activity.title }}
+          </div>
+        {% empty %}
+          <p class="text-muted">No unassigned activities.</p>
+        {% endfor %}
+      </div>
+      
+      <!-- Create New Activity form -->
+      <div class="new-activity-card">
+        <h5>Create New Activity</h5>
+        <form method="POST" id="new-activity-form" action="">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="activityName" class="form-label">Activity Name</label>
+            <input type="text" class="form-control" id="activityName" name="activityName" placeholder="e.g. Museum Visit" required>
+          </div>
+          <div class="mb-3">
+            <label for="activityDay" class="form-label">Day (optional)</label>
+            <select class="custom-select" id="activityDay" name="activityDay">
+              <option value="">Select Day</option>
+              {% for d in timeline_days %}
+                <option value="{{ d|date:'Y-m-d' }}">{{ d|date:"l, d F Y" }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="activityStartTime" class="form-label">Start Time (optional)</label>
+            <input type="time" class="form-control" id="activityStartTime" name="activityStartTime">
+          </div>
+          <div class="mb-3">
+            <label for="activityEndTime" class="form-label">End Time (optional)</label>
+            <input type="time" class="form-control" id="activityEndTime" name="activityEndTime">
+          </div>
+          <!-- Adresse (valgfrit) -->
+          <div class="mb-3">
+            <label for="activityAddress" class="form-label">Address (optional)</label>
+            <input type="text" class="form-control" id="activityAddress" name="activityAddress" placeholder="Enter address (for map/navigation)">
+          </div>
+          <button type="submit" class="btn btn-dark w-100">Add Activity</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    window.deleteActivityURL = "{% url 'delete-activity' %}";
+    window.updateActivityDateURL = "{% url 'update-activity-date' %}";
+    window.dayPlannerURL = "{% url 'day-planner' travel_plan.id %}";
+  </script>
+  <script src="{% static 'tripnavigator/day-planner.js' %}"></script>
+{% endblock %}

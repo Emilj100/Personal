@@ -1,0 +1,114 @@
+{% extends "tripnavigator/layout.html" %}
+{% load static %}
+
+{% block title %}Trip Planner{% endblock %}
+
+{% block header_wrapper %}
+<!-- Hero Section -->
+<div style="background-color: #fff;">
+  <div class="container-fluid p-0 position-relative" style="overflow: hidden; border-bottom-left-radius: 12rem; border-bottom-right-radius: 12rem;">
+    <div style="background: url('{% static 'tripnavigator/images/plan-hero.png' %}') center center / cover no-repeat; min-height: 70vh; position: relative;">
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
+      {{ block.super }}
+      <div class="position-absolute start-50 translate-middle-x text-center" style="top: 40%; z-index: 1;">
+        <!-- Desktop heading -->
+        <h1 class="d-none d-md-block display-3 fw-bold text-white mb-3">Plan Your Journey, Your Way</h1>
+        <!-- Mobil heading -->
+        <h1 class="d-block d-md-none display-4 fw-bold text-white mb-3">Plan Your Journey, Your Way</h1>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <!-- Create New Trip Button -->
+  <div class="d-flex justify-content-end mb-4">
+    <a href="{% url 'create_travelplan' %}" class="btn btn-dark btn-xl btn-border">Create New Trip</a>
+  </div>
+
+  <!-- My Trips Section -->
+  <h2 class="mb-4">My Trips</h2>
+  <div class="row g-4">
+    {% for trip in my_trips %}
+      <div class="col-12 col-md-4">
+        <a href="{% url 'overview' trip.id %}" class="text-decoration-none text-reset">
+          <div class="card h-100 shadow" style="border-radius: 1rem;">
+            {% if trip.image %}
+              <img src="{{ trip.image.url }}" class="card-img-top" alt="Trip Image" 
+                   style="max-height: 180px; object-fit: cover; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+            {% else %}
+              <div style="background-color: #ccc; height: 180px; display: flex; align-items: center; justify-content: center; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+                <span>No image</span>
+              </div>
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ trip.title }}</h5>
+              <p class="card-text">
+                <strong>Destination:</strong> {{ trip.destination }}<br>
+                <strong>Dates:</strong> {{ trip.start_date|date:"Y-m-d" }} to {{ trip.end_date|date:"Y-m-d" }}<br>
+                <strong>Category:</strong> {{ trip.get_category_display }}
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    {% empty %}
+      <p>You haven't created any trips yet.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Shared with Me Section -->
+  <h2 class="my-4">Shared with Me</h2>
+  <div class="row g-4">
+    {% for share in shared_trips %}
+      <div class="col-12 col-md-4">
+        <a href="{% url 'overview' share.travel_plan.id %}" class="text-decoration-none text-reset">
+          <div class="card h-100 shadow" style="border-radius: 1rem;">
+            {% if share.travel_plan.image %}
+              <img src="{{ share.travel_plan.image.url }}" class="card-img-top" alt="Trip Image" 
+                   style="max-height: 180px; object-fit: cover; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+            {% else %}
+              <div style="background-color: #ccc; height: 180px; display: flex; align-items: center; justify-content: center; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+                <span>No image</span>
+              </div>
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ share.travel_plan.title }}</h5>
+              <p class="card-text">
+                <strong>Destination:</strong> {{ share.travel_plan.destination }}<br>
+                <strong>Dates:</strong> {{ share.travel_plan.start_date|date:"Y-m-d" }} to {{ share.travel_plan.end_date|date:"Y-m-d" }}<br>
+                <strong>Category:</strong> {{ share.travel_plan.get_category_display }}<br>
+                <strong>Shared by:</strong> {{ share.shared_name }}
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    {% empty %}
+      <p>No trips have been shared with you yet.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- AI Assistant Section -->
+<div class="container" style="padding-top: 10rem; padding-bottom: 3rem;">
+  <div class="row align-items-center">
+    <div class="col-12 col-md-7 text-center text-md-start">
+      <h2 class="fw-bold mb-3">Need help planning your trip?</h2>
+      <p class="lead">
+        Let our AI assistant help you create a personalized itinerary, optimize your schedule, and uncover hidden gems along the way. It's fast, smart, and always ready to assist!
+      </p>
+      <a href="#" class="btn btn-dark btn-xl btn-border">Ask Our AI</a>
+    </div>
+    <div class="col-12 col-md-5 text-center mt-4 mt-md-0">
+      <img src="{% static 'tripnavigator/images/ai-idea.png' %}" alt="AI Assistant" class="img-fluid" style="max-width: 300px;">
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

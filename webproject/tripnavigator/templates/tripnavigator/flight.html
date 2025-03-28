@@ -1,0 +1,197 @@
+{% extends "tripnavigator/layout.html" %}
+{% load static %}
+
+{% block title %}Flights{% endblock %}
+
+{% block header_wrapper %}
+<!-- Wrapper med hvid baggrund -->
+<div style="background-color: #fff;">
+  <div class="container-fluid p-0 position-relative" style="overflow: hidden; border-bottom-left-radius: 12rem; border-bottom-right-radius: 12rem;">
+    <div style="background: url('{% static 'tripnavigator/images/flight-hero.png' %}') center center / cover no-repeat; min-height: 70vh; position: relative;">
+      <!-- Mørkt overlay -->
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
+      
+      {{ block.super }}
+      
+      <!-- Hero-overskrift: Stor version på desktop, mindre på mobil -->
+      <div class="position-absolute start-50 translate-middle-x text-center" style="top: 40%; z-index: 1;">
+        <h1 class="d-none d-md-block display-3 fw-bold text-white mb-3">Your Next Great Escape</h1>
+        <h1 class="d-block d-md-none display-4 fw-bold text-white mb-3">Your Next Great Escape</h1>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block hero %}{% endblock %}
+
+{% block content %}
+<!-- Kiwi Widget Section -->
+<div class="container position-relative" style="margin-top: -10rem; z-index: 2;">
+  <script async src="https://tp.media/content?trs=397564&shmarker=614135&locale=en&curr=USD&powered_by=true&border_radius=0&plain=false&color_button=%232681ff&color_button_text=%23ffffff&color_border=%23FFFFFFff&promo_id=4132&campaign_id=121" charset="utf-8"></script>
+</div>
+
+<!-- Flight Planning Guide Section -->
+<div class="bg-white py-5">
+  <div class="container px-3">
+    <!-- Header Section for Flight Planning Guide -->
+    <div class="text-center">
+      <h2 class="text-uppercase text-primary fw-semibold">Plan Your Flight</h2>
+      <p class="mt-2 display-4 fw-bold text-dark">
+        Everything you need to get airborne with ease
+      </p>
+      <p class="mt-3 lead text-muted">
+        Follow our simple steps to search, compare, plan, and book your perfect flight.
+      </p>
+    </div>
+
+    <!-- Flight Planning Guide Steps -->
+    <div class="mt-5" style="padding-bottom: 10rem;">
+      <div class="row g-4">
+        <!-- Step 1: Search for Flights -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-1-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Search for Flights</h5>
+              <p class="text-muted mb-0">
+                Discover a wide range of flight options tailored to your schedule.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Step 2: Compare Deals -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-2-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Compare Deals</h5>
+              <p class="text-muted mb-0">
+                Evaluate airlines, flight times, and prices to secure the best offer.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Step 3: Plan Your Journey -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-3-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Plan Your Journey</h5>
+              <p class="text-muted mb-0">
+                Organize your itinerary to optimize connections and layovers.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Step 4: Book with Confidence -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex scroll-animate fade-in">
+            <div class="flex-shrink-0">
+              <i class="bi bi-4-circle" style="font-size: 2rem;"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold text-dark">Book with Confidence</h5>
+              <p class="text-muted mb-0">
+                Enjoy a secure, hassle-free booking experience with all details at your fingertips.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div> <!-- end row -->
+    </div>
+  </div>
+</div>
+
+<div class="row flex-lg-row-reverse align-items-center g-5" style="padding-bottom: 10rem;">
+  <!-- Left Column: Image (slide in from right) -->
+  <div class="col-10 col-sm-8 col-lg-6 scroll-animate slide-right mx-auto">
+    <img src="{% static 'tripnavigator/images/flight-moment.png' %}" class="d-block mx-auto img-fluid" style="border-radius: 2rem;" alt="Take Off with Confidence" width="700" height="500" loading="lazy">
+  </div>
+  <!-- Right Column: Text (slide in from left) -->
+  <div class="col-12 col-lg-6 scroll-animate slide-left text-center text-lg-start">
+    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Take Off with Confidence</h1>
+    <p class="lead">
+      Whether you're planning a quick getaway or an extended journey, every flight marks the start of a new adventure.
+    </p>
+    <p class="lead">
+      Our guide inspires you with practical tips to choose flights that suit your schedule, budget, and travel style.
+    </p>
+  </div>
+</div>
+
+
+<!-- Section: Popular Destinations -->
+<div class="container my-5 shadow p-5" style="border-radius: 3rem; background-color: #000;" id="flight-guide">
+  <!-- Header Section -->
+  <div class="text-center text-white">
+    <h2 class="pb-2 border-bottom border-white">Popular Destinations</h2>
+    <p class="mt-3 lead">
+      Get inspiration for your next journey
+    </p>
+  </div>
+  <!-- Steps Section (galleri) -->
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mt-4">
+    <!-- Destination 1 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-left scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/Dubai.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Dubai</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Destination 2 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-left scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/London.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">London</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Destination 3 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-right scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/Japan.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Japan</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Destination 4 -->
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-right scroll-animate" 
+           style="background-image: url('{% static 'tripnavigator/images/Bali.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
+        <div class="d-flex flex-column h-100 p-4 text-shadow-1 justify-content-end">
+          <h4 class="fw-bold">Bali</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI Assistant Section -->
+<div class="container py-5">
+  <div class="row align-items-center">
+    <!-- Venstre side: Tekst -->
+    <div class="col-12 col-md-7 text-center text-md-start">
+      <h2 class="fw-bold mb-3">Need help finding the perfect flight?</h2>
+      <p class="lead">
+        Ask our AI assistant to provide personalized flight recommendations and help plan your journey. It's fast, smart, and always ready to assist!
+      </p>
+      <a href="{% url 'ai_chat' %}" class="btn btn-dark btn-xl btn-border">Ask Our AI</a>
+    </div>
+    <!-- Højre side: Billede/ikon -->
+    <div class="col-12 col-md-5 text-center">
+      <img src="{% static 'tripnavigator/images/ai-idea.png' %}" alt="AI Assistant" class="img-fluid" style="max-width: 300px;">
+    </div>
+  </div>
+</div>
+{% endblock %}

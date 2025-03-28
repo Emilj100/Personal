@@ -1,0 +1,83 @@
+/* --- Hero-animationer --- */
+
+/* Animation for tekst, der kommer ind fra venstre */
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Animation for billede, der kommer ind fra højre */
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Anvend animationerne – disse klasser bruges af hero-sektionen straks ved sideindlæsning */
+.slide-left {
+  animation: slideInFromLeft 1s ease-out forwards;
+}
+
+.slide-right {
+  animation: slideInFromRight 1s ease-out forwards;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+/* Animation til overskrift og undertekst: fade ind fra toppen */
+@keyframes fadeInTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-top {
+  animation: fadeInTop 0.8s ease-out forwards;
+}
+
+/* --- Scroll-triggerede animationer --- */
+
+/* Elementer med scroll-animate skal starte skjulte */
+.scroll-animate {
+  opacity: 0;
+  animation: none;
+}
+
+/* Når .animate tilføjes til elementerne, aktiveres animationen */
+.scroll-animate.animate.slide-left {
+  animation: slideInFromLeft 1s ease-out forwards;
+}
+.scroll-animate.animate.slide-right {
+  animation: slideInFromRight 1s ease-out forwards;
+}
+.scroll-animate.animate.fade-in {
+  animation: fadeIn 2s ease-out forwards;
+}

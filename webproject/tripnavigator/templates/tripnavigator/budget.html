@@ -1,0 +1,196 @@
+{% extends "tripnavigator/dashboard-layout.html" %}
+{% load static %}
+
+{% block title %}Budget & Expenses for {{ trip.title }}{% endblock %}
+
+{% block css %}
+  <link href="{% static 'tripnavigator/budget.css' %}" rel="stylesheet">
+  <style>
+    /* --- BRUTE FORCE PÅ MOBIL --- */
+    @media (max-width: 576px) {
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+      }
+      
+      /* Tillad at overskrifter bryder linjen, så de ikke stikker ud */
+      h1, h2, h3, h4, h5, h6 {
+        white-space: normal !important; /* Hvis “Bali” står i én linje, kan den brydes */
+        word-break: break-word !important; 
+      }
+      
+      /* Container: ingen fast padding eller margin, men 100% bredde */
+      .container-fluid.no-px {
+        margin: 0 auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Rækker og kolonner */
+      .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      [class^="col-"] {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      
+      /* Cards, tabeller, canvas mv. */
+      .card, .table, canvas {
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      
+      /* --- (B) SKJUL ELLER KOLLAPS SIDEBAR PÅ MOBIL, HVIS DEN FINDES --- */
+      /* Juster klassen .sidebar, hvis du har en anden klassenavn i layoutet */
+      .sidebar {
+        display: none !important; /* eller: width: 0 !important; */
+      }
+      
+      /* --- (C) Gør navbar fleksibel, hvis du har en <nav> i layoutet */
+      nav.navbar {
+        flex-wrap: wrap !important;
+        width: 100% !important;
+        overflow: hidden !important;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid no-px">
+  <h2 class="mb-4">Budget & Expenses for {{ trip.title }}</h2>
+
+  <!-- DATA for JS -->
+  <div id="budget-data"
+       data-total-spent="{{ total_spent }}"
+       data-remaining="{{ remaining }}"
+       data-category-labels='{{ category_labels|safe }}'
+       data-category-values='{{ category_totals|safe }}'>
+  </div>
+
+  <div class="row mb-4 align-items-stretch">
+    <!-- Budget Overview -->
+    <div class="col-md-6 d-flex">
+      <div class="card flex-fill" style="border: none; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Budget Overview</h5>
+          <p class="card-text">Planned Budget: ${{ total_budget }} | Spent: ${{ total_spent }}</p>
+          <div class="progress mb-3" style="height: 20px;">
+            <div class="progress-bar bg-success" role="progressbar" 
+                 style="width: {{ spent_percentage }}%;" 
+                 aria-valuenow="{{ spent_percentage }}" 
+                 aria-valuemin="0" aria-valuemax="100">
+              {{ spent_percentage }}%
+            </div>
+          </div>
+          <p class="text-muted mb-3">You have spent {{ spent_percentage }}% of your budget.</p>
+          <div class="mt-auto" style="position: relative; min-height: 300px;">
+            <canvas id="budgetDonutChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Breakdown -->
+    <div class="col-md-6 d-flex">
+      <div class="card flex-fill" style="border: none; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Category Breakdown</h5>
+          <div class="mt-auto" style="position: relative; min-height: 300px;">
+            <canvas id="categoryBreakdownChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expense Log and Add Expense -->
+  <div class="row">
+    <!-- Expense Log -->
+    <div class="col-md-8">
+      <div class="card" style="border: none; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div class="card-body">
+          <h5 class="card-title">Expense Log</h5>
+          <div class="expenses-container" style="max-height: 300px; overflow-y: auto; padding-right: 15px;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Amount ($)</th>
+                  <th>Category</th>
+                  <th>Note</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for expense in expenses %}
+                <tr>
+                  <td>{{ expense.date }}</td>
+                  <td>{{ expense.amount }}</td>
+                  <td>{{ expense.category }}</td>
+                  <td>{{ expense.note }}</td>
+                  <td>
+                    <form method="post" action="{% url 'delete_expense' trip.id expense.id %}" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5">No expenses added yet.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Add Expense -->
+    <div class="col-md-4">
+      <div class="card" style="border: none; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div class="card-body">
+          <h5 class="card-title">Quick Add Expense</h5>
+          <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              {{ form.amount.label_tag }}
+              {{ form.amount }}
+            </div>
+            <div class="mb-3">
+              {{ form.date.label_tag }}
+              {{ form.date }}
+            </div>
+            <div class="mb-3">
+              {{ form.category.label_tag }}
+              {{ form.category }}
+            </div>
+            <div class="mb-3">
+              {{ form.note.label_tag }}
+              {{ form.note }}
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Add Expense</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{% static 'tripnavigator/budget.js' %}"></script>
+{% endblock %}
