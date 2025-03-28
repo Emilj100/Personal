@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Dashboard{% endblock %}</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  
+  <!-- Custom CSS -->
+  <link href="{% static 'tripnavigator/css/styles.css' %}" rel="stylesheet">
+  
+  <!-- Ekstra mobil-justering for at undgå, at tekst bliver skåret af -->
+  <style>
+    @media (max-width: 576px) {
+      /* Fjern eller mindsk padding i hovedindholdet */
+      .flex-grow-1.p-4 {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+      }
+      /* Tillad overskrifter at bryde ord i stedet for at skubbe layoutet bredere */
+      h1, h2, h3, h4, h5, h6 {
+        white-space: normal !important;
+        word-break: break-word !important;
+      }
+      /* Fjern eventuel overskydende margin/padding i containeren */
+      .container,
+      .container-fluid {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      /* Overordnet undgå at body bliver bredere end skærmen */
+      html, body {
+        overflow-x: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+    }
+  </style>
+
+  {% block css %}{% endblock %}
+  {% block script %}{% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- Mobile Header (vises kun på små skærme) -->
+  <header class="d-block d-md-none">
+    <div class="container pt-3">
+      <header class="d-flex align-items-center justify-content-between px-4 py-2 header-animate" 
+              style="background-color: #212529; border-radius: 2rem; border: 2px solid #333;">
+        <!-- Logo / Brand -->
+        <div class="d-flex align-items-center">
+          <a href="{% url 'index' %}">
+            <img src="{% static 'tripnavigator/images/logo-white-vertical.png' %}" 
+                 alt="Logo" class="me-2 img-fluid" style="max-width: 200px;">
+          </a>
+        </div>
+        <!-- Mobil menu-knap -->
+        <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+          <i class="bi bi-list"></i>
+        </button>
+      </header>
+    </div>
+  </header>
+
+  <!-- Offcanvas Mobilmenu (kun på små skærme) -->
+  <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel" 
+       style="background-color: #212529; color: white;">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="mobileMenuLabel">Menu</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+       <nav>
+         <ul class="nav flex-column">
+           <li class="nav-item">
+             <a href="{% url 'overview' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+               <i class="bi bi-house-door me-2"></i> Trip Overview
+             </a>
+           </li>
+           <li class="nav-item">
+             <a href="{% url 'suggestions' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+               <i class="bi bi-lightbulb me-2"></i> AI Suggestions
+             </a>
+           </li>
+           <li class="nav-item">
+             <a href="{% url 'day-planner' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+               <i class="bi bi-calendar-check me-2"></i> Day Planner
+             </a>
+           </li>
+           <li class="nav-item">
+             <a href="{% url 'documents' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+               <i class="bi bi-file-earmark-text me-2"></i> Documents
+             </a>
+           </li>
+           <li class="nav-item">
+             <a href="{% url 'budget' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+               <i class="bi bi-cash-stack me-2"></i> Budget & Expenses
+             </a>
+           </li>
+           <li class="nav-item">
+             <a href="{% url 'map-navigation' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+               <i class="bi bi-geo-alt me-2"></i> Map & Navigation
+             </a>
+           </li>
+           <li class="nav-item">
+             <a href="{% url 'settings' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+               <i class="bi bi-gear me-2"></i> Settings
+             </a>
+           </li>
+           <li class="nav-item">
+             <a href="{% url 'trip-planner' %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+               <i class="bi bi-arrow-left me-2"></i> Back to Website
+             </a>
+           </li>
+         </ul>
+       </nav>
+    </div>
+  </div>
+
+  <!-- Dashboard Layout -->
+  <div class="d-flex flex-grow-1">
+    <!-- Sidebar (kun på desktop) -->
+    <div class="d-none d-md-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
+      <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <img src="{% static 'tripnavigator/images/logo-white-vertical.png' %}" alt="Logo" class="img-fluid me-2" style="max-width: 140px;">
+      </a>
+      <hr style="border-color: #333;">
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="{% url 'overview' trip.id %}" class="nav-link active nav-hover" aria-current="page" style="border-radius: 2rem;">
+            <i class="bi bi-house-door me-2"></i> Trip Overview
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'suggestions' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+            <i class="bi bi-lightbulb me-2"></i> AI Suggestions
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'day-planner' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+            <i class="bi bi-calendar-check me-2"></i> Day Planner
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'documents' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+            <i class="bi bi-file-earmark-text me-2"></i> Documents
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'budget' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+            <i class="bi bi-cash-stack me-2"></i> Budget & Expenses
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'map-navigation' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+            <i class="bi bi-geo-alt me-2"></i> Map & Navigation
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'settings' trip.id %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+            <i class="bi bi-gear me-2"></i> Settings
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'trip-planner' %}" class="nav-link text-white nav-hover" style="border-radius: 2rem;">
+            <i class="bi bi-arrow-left me-2"></i> Back to Website
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Main Content Area (én enkelt content-block, som fylder hele bredden på mobil) -->
+    <div class="flex-grow-1 p-4">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+
+</body>
+</html>

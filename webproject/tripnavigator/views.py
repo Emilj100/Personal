@@ -84,12 +84,12 @@ def trip_overview(request, trip_id):
         'selected_activities': selected_activities,
         'opencage_api_key': config('OPENCAGE_API_KEY'),
     }
-    return render(request, "tripnavigator/overview.html", context)
+    return render(request, "tripnavigator/dashboard/overview.html", context)
 
 
 def suggestions(request, trip_id):
     trip = get_object_or_404(TravelPlan, id=trip_id)
-    return render(request, "tripnavigator/suggestions.html", {"trip": trip})
+    return render(request, "tripnavigator/dashboard/suggestions.html", {"trip": trip})
 
 
 @csrf_exempt
@@ -207,7 +207,7 @@ def day_planner(request, travel_plan_id):
         'timeline_data': timeline_data,
         'unassigned_activities': unassigned_activities,
     }
-    return render(request, "tripnavigator/day-planner.html", context)
+    return render(request, "tripnavigator/dashboard/day-planner.html", context)
 
 def update_activity_date(request):
     """Opdaterer en aktivitets date via AJAX."""
@@ -261,7 +261,7 @@ def documents(request, trip_id):
          'documents': docs,
          'form': form,
     }
-    return render(request, "tripnavigator/documents.html", context)
+    return render(request, "tripnavigator/dashboard/documents.html", context)
 
 
 
@@ -290,7 +290,7 @@ def upload_document(request, trip_id):
         "form": form,
         "trip": trip,
     }
-    return render(request, "tripnavigator/upload_document.html", context)
+    return render(request, "tripnavigator/dashboard/upload_document.html", context)
 
 
 def budget(request, trip_id):
@@ -321,7 +321,7 @@ def budget(request, trip_id):
     else:
         form = ExpenseForm()
 
-    return render(request, "tripnavigator/budget.html", {
+    return render(request, "tripnavigator/dashboard/budget.html", {
         "trip": trip,
         "expenses": expenses,
         "total_budget": total_budget,
@@ -359,7 +359,7 @@ def map_navigation(request, trip_id):
         'all_activities': all_activities,
         'opencage_api_key': OPENCAGE_API_KEY,
     }
-    return render(request, "tripnavigator/map-navigation.html", context)
+    return render(request, "tripnavigator/dashboard/map-navigation.html", context)
 
 
 def update_hotel_address(request, travel_plan_id):
@@ -392,7 +392,7 @@ def settings(request, trip_id):
     else:
         form = TripForm(instance=trip)
     
-    return render(request, "tripnavigator/settings.html", {
+    return render(request, "tripnavigator/dashboard/settings.html", {
         "trip": trip,
         "form": form,
     })

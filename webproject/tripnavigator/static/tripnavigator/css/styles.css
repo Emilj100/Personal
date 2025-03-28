@@ -1,0 +1,70 @@
+    /* Hover-effekt for navigationslink og Sign in-knap */
+    .nav-hover, .btn-hover {
+        border: 2px solid transparent;
+        border-radius: 2rem;
+        background-color: transparent;
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+      }
+      .nav-hover:hover, .btn-hover:hover {
+        background-color: rgba(128,128,128,0.5);
+        border-color: #333;
+      }
+      /* Sørg for at teksten forbliver hvid på hover for Sign in-knappen */
+      .btn-hover:hover {
+        color: white;
+      }
+      /* Get Started-knappen med fast border, som ved hover skifter baggrund til sort */
+      .btn-prim {
+        border-radius: 2rem;
+        background-color: white;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .btn-prim:hover {
+        background-color: black;
+        color: white;
+        border-color: black;
+      }
+
+      .btn-xl {
+        padding: 1rem 2rem;  /* Juster disse værdier efter behov */
+        font-size: 1.25rem;  /* Gør teksten lidt større */
+      }
+
+      .btn-border {
+        border-radius: 2rem;
+      }
+      
+  /* ============== LOGIN PAGE ============== */
+  .form-signin {
+    padding-top: 40px; /* Tilføjet ekstra padding øverst */
+    padding-right: 100px;
+    padding-left: 100px;
+    padding-bottom: 40px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centers the content in the box */
+  }
+  
+  .form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+  }
+
+  .sign-in-picture {
+    max-width: 200px; 
+    margin-bottom: 20px;
+  }
+
+
+  .message {
+    color: red;
+    padding-bottom: 20px;
+}
+
+html, body {
+  overflow-x: hidden;
+}
