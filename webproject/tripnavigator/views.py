@@ -108,7 +108,7 @@ def suggestions(request, trip_id):
 @csrf_exempt
 def generate_suggestions(request, trip_id):
     if request.method == "POST":
-        # Retrieve trip details to build a prompt.
+        # Retrieve trip details to build the API prompt.
         trip = get_object_or_404(TravelPlan, id=trip_id)
         destination = trip.destination
         start_date = trip.start_date
@@ -135,7 +135,7 @@ def generate_suggestions(request, trip_id):
         """
         
         try:
-            # Call OpenAI API to generate suggestions.
+            # Call the OpenAI API with the prompt and parse the JSON response.
             response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[{"role": "user", "content": prompt}],
@@ -152,7 +152,7 @@ def generate_suggestions(request, trip_id):
 @csrf_exempt
 def add_suggestion_to_plan(request, trip_id):
     """
-    Create a new activity using the suggested title as an unassigned activity.
+    Create a new unassigned activity using the suggested title.
     """
     if request.method == "POST":
         trip = get_object_or_404(TravelPlan, id=trip_id)
@@ -160,15 +160,18 @@ def add_suggestion_to_plan(request, trip_id):
         if not suggestion_title:
             return JsonResponse({"success": False, "error": "No title provided."}, status=400)
         try:
+            # Create a new activity with no assigned date.
             new_activity = Activity.objects.create(
                 travel_plan=trip,
                 title=suggestion_title,
-                date=None  # Unassigned activity.
+                date=None
             )
             return JsonResponse({"success": True, "activity_id": new_activity.id})
         except Exception as e:
             return JsonResponse({"success": False, "error": str(e)}, status=500)
     return JsonResponse({"success": False}, status=400)
+
+
 
 
 def day_planner(request, travel_plan_id):
