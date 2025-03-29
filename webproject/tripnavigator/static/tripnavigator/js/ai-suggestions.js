@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
+  // Cache DOM elements for the suggestions feature.
   const generateBtn = document.getElementById("generateBtn");
   const suggestionsContainer = document.getElementById("suggestionsContainer");
   const messageArea = document.getElementById("messageArea");
 
+  // Event listener: Generate suggestions when the button is clicked.
   generateBtn.addEventListener("click", function() {
+    // Show a loading message while fetching suggestions.
     suggestionsContainer.innerHTML = '<div class="col-12 text-center"><p>Generating suggestions... Please wait.</p></div>';
 
     fetch(window.generateSuggestionsUrl, {
@@ -19,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
       console.log("Received suggestions:", data);
       suggestionsContainer.innerHTML = ''; 
       if (data.suggestions && data.suggestions.length > 0) {
+        // Loop through suggestions and inject them as cards.
         data.suggestions.forEach(function(suggestion) {
           const cardHTML = `
             <div class="col-md-4 col-lg-3">
@@ -47,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
+  // Display a temporary message to the user.
   function showMessage(text, type) {
     messageArea.innerHTML = `<div class="alert alert-${type}" role="alert">${text}</div>`;
     setTimeout(() => {
@@ -54,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 4000);
   }
 
+  // Global function to add a suggestion to the trip plan.
   window.addToPlan = function(suggestionTitle) {
     fetch(window.addToPlanUrl, {
       method: 'POST',
@@ -77,8 +83,9 @@ document.addEventListener("DOMContentLoaded", function() {
       console.error("Error adding activity:", error);
       showMessage("Error adding activity.", "danger");
     });
-  }
+  };
 
+  // Helper function: Retrieve a cookie value by its name.
   function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {

@@ -4,16 +4,16 @@
 {% block title %}Flights{% endblock %}
 
 {% block header_wrapper %}
-<!-- Wrapper med hvid baggrund -->
+<!-- Header wrapper with white background and hero image -->
 <div style="background-color: #fff;">
   <div class="container-fluid p-0 position-relative" style="overflow: hidden; border-bottom-left-radius: 12rem; border-bottom-right-radius: 12rem;">
     <div style="background: url('{% static 'tripnavigator/images/flight-hero.png' %}') center center / cover no-repeat; min-height: 70vh; position: relative;">
-      <!-- Mørkt overlay -->
+      <!-- Dark overlay for better text contrast -->
       <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
       
       {{ block.super }}
       
-      <!-- Hero-overskrift: Stor version på desktop, mindre på mobil -->
+      <!-- Hero headline: larger on desktop, smaller on mobile -->
       <div class="position-absolute start-50 translate-middle-x text-center" style="top: 40%; z-index: 1;">
         <h1 class="d-none d-md-block display-3 fw-bold text-white mb-3">Your Next Great Escape</h1>
         <h1 class="d-block d-md-none display-4 fw-bold text-white mb-3">Your Next Great Escape</h1>
@@ -34,7 +34,7 @@
 <!-- Flight Planning Guide Section -->
 <div class="bg-white py-5">
   <div class="container px-3">
-    <!-- Header Section for Flight Planning Guide -->
+    <!-- Guide header -->
     <div class="text-center">
       <h2 class="text-uppercase text-primary fw-semibold">Plan Your Flight</h2>
       <p class="mt-2 display-4 fw-bold text-dark">
@@ -45,7 +45,7 @@
       </p>
     </div>
 
-    <!-- Flight Planning Guide Steps -->
+    <!-- Flight planning steps -->
     <div class="mt-5" style="padding-bottom: 10rem;">
       <div class="row g-4">
         <!-- Step 1: Search for Flights -->
@@ -109,12 +109,13 @@
   </div>
 </div>
 
+<!-- Section with image and text for flight inspiration -->
 <div class="row flex-lg-row-reverse align-items-center g-5" style="padding-bottom: 10rem;">
-  <!-- Left Column: Image (slide in from right) -->
+  <!-- Left Column: Image -->
   <div class="col-10 col-sm-8 col-lg-6 scroll-animate slide-right mx-auto">
     <img src="{% static 'tripnavigator/images/flight-moment.png' %}" class="d-block mx-auto img-fluid" style="border-radius: 2rem;" alt="Take Off with Confidence" width="700" height="500" loading="lazy">
   </div>
-  <!-- Right Column: Text (slide in from left) -->
+  <!-- Right Column: Text -->
   <div class="col-12 col-lg-6 scroll-animate slide-left text-center text-lg-start">
     <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Take Off with Confidence</h1>
     <p class="lead">
@@ -126,17 +127,16 @@
   </div>
 </div>
 
-
-<!-- Section: Popular Destinations -->
+<!-- Popular Destinations Gallery Section -->
 <div class="container my-5 shadow p-5" style="border-radius: 3rem; background-color: #000;" id="flight-guide">
-  <!-- Header Section -->
+  <!-- Gallery header -->
   <div class="text-center text-white">
     <h2 class="pb-2 border-bottom border-white">Popular Destinations</h2>
     <p class="mt-3 lead">
       Get inspiration for your next journey
     </p>
   </div>
-  <!-- Steps Section (galleri) -->
+  <!-- Gallery items -->
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mt-4">
     <!-- Destination 1 -->
     <div class="col">
@@ -180,7 +180,7 @@
 <!-- AI Assistant Section -->
 <div class="container py-5">
   <div class="row align-items-center">
-    <!-- Venstre side: Tekst -->
+    <!-- Left side: Text -->
     <div class="col-12 col-md-7 text-center text-md-start">
       <h2 class="fw-bold mb-3">Need help finding the perfect flight?</h2>
       <p class="lead">
@@ -188,7 +188,7 @@
       </p>
       <a href="{% url 'ai_chat' %}" class="btn btn-dark btn-xl btn-border">Ask Our AI</a>
     </div>
-    <!-- Højre side: Billede/ikon -->
+    <!-- Right side: Image -->
     <div class="col-12 col-md-5 text-center">
       <img src="{% static 'tripnavigator/images/ai-idea.png' %}" alt="AI Assistant" class="img-fluid" style="max-width: 300px;">
     </div>

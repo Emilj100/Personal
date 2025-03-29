@@ -4,18 +4,17 @@
 {% block title %}Experiences{% endblock %}
 
 {% block header_wrapper %}
-<!-- Hero-sektion -->
+<!-- Hero section with background image and overlay -->
 <div style="background-color: #fff;">
   <div class="container-fluid p-0 position-relative" style="overflow: hidden; border-bottom-left-radius: 12rem; border-bottom-right-radius: 12rem;">
     <div style="background: url('{% static 'tripnavigator/images/experience-hero.png' %}') center center / cover no-repeat; min-height: 70vh; position: relative;">
       <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
       {{ block.super }}
+      <!-- Hero headline (responsive: desktop and mobile) -->
       <div class="position-absolute start-50 translate-middle-x text-center" style="top: 40%; z-index: 1;">
-        <!-- Desktop overskrift -->
         <h1 class="d-none d-md-block display-3 fw-bold text-white mb-3">
           Experience the World, One Adventure at a Time
         </h1>
-        <!-- Mobil overskrift -->
         <h1 class="d-block d-md-none display-4 fw-bold text-white mb-3">
           Experience the World, One Adventure at a Time
         </h1>
@@ -26,10 +25,9 @@
 {% endblock %}
 
 {% block content %}
-<!-- Experience Search Form -->
+<!-- Experience Search Form with TripAdvisor logo -->
 <div class="container position-relative" style="margin-top: -8rem; z-index: 2;">
   <div class="mx-auto bg-white text-dark p-4 shadow position-relative" style="max-width: 1300px; width: 100%; border-radius: 3rem;">
-    <!-- TripAdvisor-logo i øverste højre hjørne -->
     <img src="{% static 'tripnavigator/images/tripadvisor-logo.png' %}" alt="TripAdvisor" 
          style="position: absolute; top: 1.5rem; right: 2rem; max-height: 25px; z-index: 10;">
     <form id="experience-form">
@@ -49,15 +47,15 @@
   </div>
 </div>
 
-<!-- Experience Results Container -->
+<!-- Container for Experience Results -->
 <div class="container py-5" id="experience-results">
-  <!-- Her indsættes resultaterne -->
+  <!-- Experience results are inserted here -->
 </div>
 
-<!-- Planning Guide Section -->
+<!-- Planning Guide Section for Experiences -->
 <div class="bg-white py-5">
   <div class="container px-3">
-    <!-- Header Section for Planning Guide -->
+    <!-- Guide header -->
     <div class="text-center">
       <h2 class="text-uppercase text-primary fw-semibold">Plan Your Experience</h2>
       <p class="mt-2 display-4 fw-bold text-dark">
@@ -68,7 +66,7 @@
       </p>
     </div>
 
-    <!-- Planning Guide Steps -->
+    <!-- Experience Planning Steps -->
     <div class="mt-5" style="padding-bottom: 10rem;">
       <div class="row g-4">
         <!-- Step 1: Discover Experiences -->
@@ -152,16 +150,16 @@
 
 <!-- Planning Guide Gallery Section -->
 <div class="container my-5 shadow p-5" style="border-radius: 3rem; background-color: #000;" id="planning-guide">
-  <!-- Header Section -->
+  <!-- Gallery header -->
   <div class="text-center text-white">
     <h2 class="pb-2 border-bottom border-white">Plan Your Experience</h2>
     <p class="mt-3 lead">
       Choose experiences that match your passions and personality to create unforgettable memories.
     </p>
   </div>
-  <!-- Gallery: Responsive columns -->
+  <!-- Gallery grid -->
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mt-4">
-    <!-- Step 1: Cultural Exploration -->
+    <!-- Gallery item: Cultural Exploration -->
     <div class="col">
       <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-left scroll-animate" 
            style="background-image: url('{% static 'tripnavigator/images/cultural-exploration1.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
@@ -171,7 +169,7 @@
         </div>
       </div>
     </div>
-    <!-- Step 2: Outdoor Adventures -->
+    <!-- Gallery item: Outdoor Adventures -->
     <div class="col">
       <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-left scroll-animate" 
            style="background-image: url('{% static 'tripnavigator/images/outdoor-adventures.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
@@ -181,7 +179,7 @@
         </div>
       </div>
     </div>
-    <!-- Step 3: Relaxation & Wellness -->
+    <!-- Gallery item: Relaxation & Wellness -->
     <div class="col">
       <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-right scroll-animate" 
            style="background-image: url('{% static 'tripnavigator/images/relaxation-wellness.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
@@ -191,7 +189,7 @@
         </div>
       </div>
     </div>
-    <!-- Step 4: Entertainment & Arts -->
+    <!-- Gallery item: Entertainment & Arts -->
     <div class="col">
       <div class="card card-cover h-100 overflow-hidden text-white shadow-lg slide-right scroll-animate" 
            style="background-image: url('{% static 'tripnavigator/images/entertainment-arts.png' %}'); background-size: cover; background-position: center; min-height: 450px; border-radius: 2rem;">
@@ -207,6 +205,7 @@
 <!-- AI Assistant Section -->
 <div class="container" style="padding-top: 10rem; padding-bottom: 3rem;">
   <div class="row align-items-center">
+    <!-- Text content -->
     <div class="col-12 col-md-7 text-center text-md-start">
       <h2 class="fw-bold mb-3">Need help to find a great experience?</h2>
       <p class="lead">
@@ -214,6 +213,7 @@
       </p>
       <a href="{% url 'ai_chat' %}" class="btn btn-dark btn-xl btn-border">Ask Our AI</a>
     </div>
+    <!-- AI image -->
     <div class="col-12 col-md-5 text-center">
       <img src="{% static 'tripnavigator/images/ai-idea.png' %}" alt="AI Assistant" class="img-fluid" style="max-width: 300px;">
     </div>
@@ -222,5 +222,6 @@
 {% endblock %}
 
 {% block script %}
+<!-- Experience-specific JavaScript -->
 <script src="{% static 'tripnavigator/js/experience.js' %}"></script>
 {% endblock %}

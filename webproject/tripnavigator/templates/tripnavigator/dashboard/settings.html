@@ -5,9 +5,11 @@
 
 {% block content %}
 <div class="container-fluid px-3 px-md-4 my-4">
+  <!-- Page heading -->
   <h2 class="mb-4 text-center text-md-start">Trip Settings for "{{ trip.title }}"</h2>
   <div class="card mb-5 shadow-sm border-0" style="border-radius: 1rem;">
     <div class="card-body">
+      <!-- Trip settings form -->
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}

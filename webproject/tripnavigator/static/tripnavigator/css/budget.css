@@ -1,52 +1,57 @@
-    /* --- BRUTE FORCE PÅ MOBIL --- */
-    @media (max-width: 576px) {
-        html, body {
-          margin: 0 !important;
-          padding: 0 !important;
-          max-width: 100% !important;
-          overflow-x: hidden !important;
-          box-sizing: border-box !important;
-        }
-        
-        /* Tillad at overskrifter bryder linjen, så de ikke stikker ud */
-        h1, h2, h3, h4, h5, h6 {
-          white-space: normal !important;
-          word-break: break-word !important; 
-        }
-        
-        .container-fluid.no-px {
-          margin: 0 auto !important;
-          padding-left: 0 !important;
-          padding-right: 0 !important;
-          max-width: 100% !important;
-          width: 100% !important;
-          box-sizing: border-box !important;
-        }
+/* --- BRUTE FORCE ON MOBILE --- */
+@media (max-width: 576px) {
+  /* Reset margins and paddings for html and body */
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
   
-        .row {
-          margin-left: 0 !important;
-          margin-right: 0 !important;
-        }
-        [class^="col-"] {
-          padding-left: 0 !important;
-          padding-right: 0 !important;
-        }
-        
-        .card, .table, canvas {
-          margin: 0 !important;
-          padding: 0 !important;
-          max-width: 100% !important;
-          box-sizing: border-box !important;
-        }
-        
+  /* Allow headings to break lines to prevent overflow */
+  h1, h2, h3, h4, h5, h6 {
+    white-space: normal !important;
+    word-break: break-word !important; 
+  }
+  
+  /* Ensure full-width containers have no horizontal padding */
+  .container-fluid.no-px {
+    margin: 0 auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
 
-        .sidebar {
-          display: none !important; 
-        }
-        
-        nav.navbar {
-          flex-wrap: wrap !important;
-          width: 100% !important;
-          overflow: hidden !important;
-        }
-      }
+  /* Remove horizontal margins and paddings from rows and columns */
+  .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  [class^="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* Ensure cards, tables, and canvases fit the viewport */
+  .card, .table, canvas {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Hide sidebar on mobile devices */
+  .sidebar {
+    display: none !important; 
+  }
+  
+  /* Adjust navbar layout for mobile */
+  nav.navbar {
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+}

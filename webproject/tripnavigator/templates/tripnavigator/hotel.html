@@ -4,29 +4,28 @@
 {% block title %}Hotels{% endblock %}
 
 {% block script %}
+  <!-- Include hotel-specific JavaScript -->
   <script src="{% static 'tripnavigator/js/hotel.js' %}"></script>
 {% endblock %}
 
 {% block header_wrapper %}
-<!-- Wrapper med hvid baggrund -->  
+<!-- Header wrapper with white background and hotel hero image -->
 <div style="background-color: #fff;">
   <div class="container-fluid p-0 position-relative" 
        style="overflow: hidden; border-bottom-left-radius: 12rem; border-bottom-right-radius: 12rem;">
     <div style="background: url('{% static 'tripnavigator/images/hotel-hero.png' %}') center center / cover no-repeat; 
                 min-height: 70vh; position: relative;">
-      <!-- Mørkt overlay -->
+      <!-- Dark overlay for contrast -->
       <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
       
-      <!-- base.html’s header via block.super -->
+      <!-- Base header from layout -->
       {{ block.super }}
       
-      <!-- Hero-overskrift -->
+      <!-- Hero headline: larger on desktop, smaller on mobile -->
       <div class="position-absolute start-50 translate-middle-x text-center" style="top: 40%; z-index: 1;">
-        <!-- Desktop: display-3, skjult på små skærme -->
         <h1 class="d-none d-md-block display-3 fw-bold text-white mb-3">
           Your Perfect Stay Awaits
         </h1>
-        <!-- Mobil: display-4, kun vist på små skærme -->
         <h1 class="d-block d-md-none display-4 fw-bold text-white mb-3">
           Your Perfect Stay Awaits
         </h1>
@@ -39,13 +38,13 @@
 {% block hero %}{% endblock %}
 
 {% block content %}
-<!-- Travelpayouts hotel-script -->
+<!-- Travelpayouts hotel widget -->
 <div id="widget-container" class="container position-relative d-flex d-md-block justify-content-center" style="margin-top: -10rem; z-index: 2;"></div>
 
-<!-- Baggrund med tekst og "Plan Your Stay" sektion -->
+<!-- Hotel Planning Guide Section -->
 <div class="bg-white py-5">
   <div class="container px-3">
-    <!-- Header Section for Hotel Planning Guide -->
+    <!-- Guide header -->
     <div class="text-center">
       <h2 class="text-uppercase text-primary fw-semibold">Plan Your Stay</h2>
       <p class="mt-2 display-4 fw-bold text-dark">
@@ -56,7 +55,7 @@
       </p>
     </div>
 
-    <!-- Planning Guide Steps -->
+    <!-- Planning guide steps -->
     <div class="mt-5" style="padding-bottom: 10rem;">
       <div class="row g-4">
         <!-- Step 1: Discover Accommodations -->
@@ -115,14 +114,14 @@
             </div>
           </div>
         </div>
-      </div> <!-- end row -->
+      </div> <!-- End row -->
     </div>
   </div>
 </div>
 
-<!-- Sektion med billede til højre på store skærme (flex-lg-row-reverse) -->
+<!-- Section with image and text -->
 <div class="row flex-lg-row-reverse align-items-center g-5" style="padding-bottom: 10rem;">
-  <!-- Billede (slide in from right) -->
+  <!-- Image (slides in from right) -->
   <div class="col-12 col-sm-8 col-lg-6 scroll-animate slide-right mx-auto mx-lg-0">
     <img src="{% static 'tripnavigator/images/hotel-lobby.png' %}" 
          class="d-block mx-lg-auto img-fluid" 
@@ -130,7 +129,7 @@
          alt="Relax and Unwind" 
          width="700" height="500" loading="lazy">
   </div>
-  <!-- Tekst (slide in from left) -->
+  <!-- Text (slides in from left) -->
   <div class="col-12 col-lg-6 scroll-animate slide-left text-center text-lg-start">
     <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Relax and Unwind</h1>
     <p class="lead">
@@ -142,9 +141,9 @@
   </div>
 </div>
 
-<!-- Sort baggrund med hotel-eksempler i 4 kolonner på md+ -->
+<!-- Hotels Gallery Section -->
 <div class="container my-5 shadow p-5" style="border-radius: 3rem; background-color: #000;" id="planning-guide">
-  <!-- Header Section -->
+  <!-- Gallery header -->
   <div class="text-center text-white">
     <h2 class="pb-2 border-bottom border-white">Plan Your Stay</h2>
     <p class="mt-3 lead">
@@ -152,7 +151,7 @@
     </p>
   </div>
   
-  <!-- Hotels galleri: row-cols-1 row-cols-sm-2 row-cols-md-4 -->
+  <!-- Hotels gallery grid -->
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mt-4">
     <!-- Hotel 1 -->
     <div class="col">
@@ -197,10 +196,10 @@
   </div>
 </div>
 
-<!-- Sidste sektion: "Need help finding the perfect stay?" -->
+<!-- Final AI Assistant Section -->
 <div class="container py-5">
   <div class="row align-items-center">
-    <!-- Venstre side: Tekst -->
+    <!-- Text content -->
     <div class="col-12 col-md-7 text-center text-md-start">
       <h2 class="fw-bold mb-3">Need help finding the perfect stay?</h2>
       <p class="lead">
@@ -209,7 +208,7 @@
       </p>
       <a href="{% url 'ai_chat' %}" class="btn btn-dark btn-xl btn-border">Ask Our AI</a>
     </div>
-    <!-- Højre side: Billede/ikon -->
+    <!-- AI image -->
     <div class="col-12 col-md-5 text-center mt-4 mt-md-0">
       <img src="{% static 'tripnavigator/images/ai-idea.png' %}" alt="AI Assistant" 
            class="img-fluid" style="max-width: 300px;">

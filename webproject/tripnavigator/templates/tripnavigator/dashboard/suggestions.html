@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="container my-4">
-  <!-- Header og introduktion -->
+  <!-- Header section with introduction -->
   <div class="text-center mb-5">
     <h2 class="fw-bold">Personalized Recommendations for {{ trip.destination }}</h2>
     <p class="text-muted">
@@ -14,21 +14,21 @@
     <button id="generateBtn" class="btn btn-primary">Generate Suggestions</button>
   </div>
   
-  <!-- Message area til inline beskeder -->
+  <!-- Area for inline messages -->
   <div id="messageArea" class="mb-3"></div>
   
-  <!-- Container for dynamisk genererede kort -->
+  <!-- Container for dynamically generated suggestion cards -->
   <div class="row g-4" id="suggestionsContainer">
-    <!-- Dynamisk indhold injiceres her -->
+    <!-- Dynamic content injected here -->
   </div>
 </div>
 {% endblock %}
 
 {% block script %}
-<script>
-  // Sæt URL'erne til generate_suggestions og add_suggestion_to_plan, inklusiv trip.id
-  window.generateSuggestionsUrl = "{% url 'generate_suggestions' trip.id %}";
-  window.addToPlanUrl = "{% url 'add_suggestion_to_plan' trip.id %}";
-</script>
-<script src="{% static 'tripnavigator/js/ai-suggestions.js' %}"></script>
+  <!-- Set URLs for generating suggestions and adding to plan -->
+  <script>
+    window.generateSuggestionsUrl = "{% url 'generate_suggestions' trip.id %}";
+    window.addToPlanUrl = "{% url 'add_suggestion_to_plan' trip.id %}";
+  </script>
+  <script src="{% static 'tripnavigator/js/ai-suggestions.js' %}"></script>
 {% endblock %}

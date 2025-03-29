@@ -1,13 +1,14 @@
-    /* Fjern ekstra horisontal padding på mobil */
-    @media (max-width: 576px) {
-        .container-fluid.no-px {
-          padding-left: 0 !important;
-          padding-right: 0 !important;
-        }
-      }
-      /* Juster kortets højde på ekstra små skærme */
-      @media (max-width: 576px) {
-        .map-card {
-          height: 300px !important;
-        }
-      }
+/* Remove extra horizontal padding on mobile */
+@media (max-width: 576px) {
+  .container-fluid.no-px {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* Adjust map card height on extra small screens */
+@media (max-width: 576px) {
+  .map-card {
+    height: 300px !important;
+  }
+}

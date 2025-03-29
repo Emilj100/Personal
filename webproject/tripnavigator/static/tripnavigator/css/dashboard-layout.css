@@ -1,0 +1,26 @@
+/* Extra mobile adjustments to prevent text overflow */
+@media (max-width: 576px) {
+    /* Reduce padding in main content */
+    .flex-grow-1.p-4 {
+      padding-left: 8px !important;
+      padding-right: 8px !important;
+    }
+    /* Allow headings to break lines */
+    h1, h2, h3, h4, h5, h6 {
+      white-space: normal !important;
+      word-break: break-word !important;
+    }
+    /* Remove extra margins/paddings from containers */
+    .container,
+    .container-fluid {
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    /* Ensure the body does not exceed the viewport width */
+    html, body {
+      overflow-x: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }

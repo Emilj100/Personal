@@ -1,4 +1,4 @@
-/* Chat Wrapper med fast bredde og blød skygge */
+/* Chat Wrapper: fixed width with soft shadow and rounded corners */
 #chatWrapper {
   width: 100%;
   max-width: 1200px;
@@ -9,7 +9,7 @@
   background: #fff;
 }
 
-/* Chat Header */
+/* Chat Header: styled header with background, padding, and flex layout */
 #chatHeader {
   background-color: #f5f5f5;
   border-bottom: 1px solid #ddd;
@@ -27,7 +27,7 @@
   color: #999;
 }
 
-/* Chat Container */
+/* Chat Container: fixed height with vertical scrolling and padding */
 #chatContainer {
   height: 500px;
   overflow-y: auto;
@@ -35,7 +35,7 @@
   background-color: #f1f1f1;
 }
 
-/* Bubble Containers, Avatars, Message Bubbles og Timestamp forbliver uændret */
+/* Bubble Containers and Avatar Styles for Chat Messages */
 .bubble-container {
   display: flex;
   align-items: flex-end;
@@ -62,6 +62,8 @@
   margin-left: 8px;
   margin-right: 0;
 }
+
+/* Message Bubble Styles for AI and User */
 .message-bubble {
   display: inline-block;
   padding: 10px 14px;
@@ -98,12 +100,13 @@
   margin-left: 8px;
 }
 
-
-
+/* AI message header style inside bubble */
 .message-bubble.ai h4 {
   font-size: 1rem;
   margin: 0 0 5px;
 }
+
+/* Dots animation for loading indicators */
 .dots {
   display: inline-block;
 }
@@ -121,6 +124,8 @@
   40%, 60% { opacity: 1; }
   80%, 100% { opacity: 0; }
 }
+
+/* Timestamp styling for chat messages */
 .timestamp {
   font-size: 0.75rem;
   color: #aaa;
@@ -134,12 +139,14 @@
   margin-left: 0;
   order: -1;
 }
+
+/* Fade In Animation for message bubbles */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(5px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Foruddefinerede spørgsmål - margin og wrapping */
+/* Predefined Questions Buttons: spacing adjustments */
 .predefined-buttons button {
   margin-right: 5px;
   margin-bottom: 5px;

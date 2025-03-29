@@ -4,16 +4,15 @@
 {% block title %}Trip Planner{% endblock %}
 
 {% block header_wrapper %}
-<!-- Hero Section -->
+<!-- Hero Section with background image and overlay -->
 <div style="background-color: #fff;">
   <div class="container-fluid p-0 position-relative" style="overflow: hidden; border-bottom-left-radius: 12rem; border-bottom-right-radius: 12rem;">
     <div style="background: url('{% static 'tripnavigator/images/plan-hero.png' %}') center center / cover no-repeat; min-height: 70vh; position: relative;">
       <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
       {{ block.super }}
+      <!-- Responsive heading: Desktop and Mobile versions -->
       <div class="position-absolute start-50 translate-middle-x text-center" style="top: 40%; z-index: 1;">
-        <!-- Desktop heading -->
         <h1 class="d-none d-md-block display-3 fw-bold text-white mb-3">Plan Your Journey, Your Way</h1>
-        <!-- Mobil heading -->
         <h1 class="d-block d-md-none display-4 fw-bold text-white mb-3">Plan Your Journey, Your Way</h1>
       </div>
     </div>
@@ -92,7 +91,7 @@
   </div>
 </div>
 
-<!-- AI Assistant Section -->
+<!-- AI Assistant Section for Trip Planning Help -->
 <div class="container" style="padding-top: 10rem; padding-bottom: 3rem;">
   <div class="row align-items-center">
     <div class="col-12 col-md-7 text-center text-md-start">

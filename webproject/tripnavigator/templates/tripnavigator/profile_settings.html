@@ -4,10 +4,13 @@
 {% block title %}Profile Settings{% endblock %}
 
 {% block content %}
+<!-- Main container for Profile Settings -->
 <div class="container my-4">
   <h2 class="mb-4">Profile Settings</h2>
+  <!-- Card wrapper with soft shadow and rounded corners -->
   <div class="card mb-5" style="border: none; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
     <div class="card-body">
+      <!-- Profile settings form -->
       <form method="post">
         {% csrf_token %}
         <div class="row g-3">

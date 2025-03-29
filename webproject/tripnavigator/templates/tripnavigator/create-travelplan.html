@@ -4,7 +4,7 @@
 {% block title %}Create Travel Plan{% endblock %}
 
 {% block header_wrapper %}
-<!-- Hero Section -->
+<!-- Hero Section with background image and overlay -->
 <div style="background-color: #fff;">
   <div class="container-fluid p-0 position-relative" style="overflow: hidden; border-bottom-left-radius: 12rem; border-bottom-right-radius: 12rem;">
     <div style="background: url('{% static 'tripnavigator/images/plan-hero.png' %}') center center / cover no-repeat; min-height: 70vh; position: relative;">
@@ -19,13 +19,14 @@
 {% endblock %}
 
 {% block content %}
+<!-- Main content: Create New Travel Plan Form -->
 <div class="my-5">
   <h2 class="mb-4">Create a New Travel Plan</h2>
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.non_field_errors }}
     
-    <!-- Rejseplan felter -->
+    <!-- Travel plan fields -->
     <div class="mb-3">
       <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
       {{ form.title }}
@@ -66,7 +67,6 @@
       {{ form.description }}
       {{ form.description.errors }}
     </div>
-    
     <div class="mb-3">
       <label for="{{ form.share_email.id_for_label }}" class="form-label">Share with Email (optional)</label>
       {{ form.share_email }}

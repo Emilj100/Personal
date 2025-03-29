@@ -4,13 +4,14 @@
 {% block title %}Map & Navigation - {{ travel_plan.title }}{% endblock %}
 
 {% block css %}
-  <!-- Leaflet CSS -->
+  <!-- Include Leaflet CSS and custom map-navigation styles -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
   <link rel="stylesheet" href="{% static 'tripnavigator/css/map-navigation.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid px-md-4">
+  <!-- Page heading -->
   <h2 class="mb-4">Map & Navigation</h2>
   <div id="messages"></div>
 
@@ -19,9 +20,9 @@
     <div class="col-md-8">
       <div class="card" style="border: none; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: 70vh;">
         <div class="card-body p-0 h-100 position-relative">
-          <!-- Kortet fylder hele card-body -->
+          <!-- The map fills the entire card-body -->
           <div id="map" class="w-100 h-100" style="border-radius: 1rem;"></div>
-          <!-- InfoBox, der vises ved klik på en aktivitet -->
+          <!-- InfoBox displayed when clicking an activity marker -->
           <div id="infoBox" class="d-none" style="position: absolute; top: 20px; left: 20px; width: 220px; padding: 1rem; background: #fff; border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 999;">
             <h6 id="infoTitle" class="mb-1"></h6>
             <p id="infoDetails" class="mb-2" style="font-size: 0.9rem;"></p>
@@ -31,10 +32,10 @@
       </div>
     </div>
     
-    <!-- Activities Section -->
+    <!-- Activities & Hotel Address Section -->
     <div class="col-md-4">
       <div class="d-flex flex-column" style="height: 70vh; gap: 1rem;">
-        <!-- Today's Activities -->
+        <!-- Today's Activities List -->
         <div class="card flex-grow-1 h-100 overflow-auto" style="border: none; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
           <div class="card-body d-flex flex-column h-100">
             <h5 class="card-title">Today's Activities</h5>
@@ -57,7 +58,7 @@
           </div>
         </div>
         
-        <!-- All Activities -->
+        <!-- All Activities List -->
         <div class="card flex-grow-1 h-100 overflow-auto" style="border: none; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
           <div class="card-body d-flex flex-column h-100">
             <h5 class="card-title">All Activities</h5>
@@ -80,7 +81,7 @@
           </div>
         </div>
         
-        <!-- Hotel Address -->
+        <!-- Hotel Address Update Section -->
         <div class="card" style="border: none; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
           <div class="card-body">
             <h5 class="card-title">Hotel Address</h5>
@@ -97,10 +98,10 @@
 {% endblock %}
 
 {% block script %}
-  <!-- Leaflet JS -->
+  <!-- Include Leaflet JS library -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   
-  <!-- Overfør data fra Django til JS -->
+  <!-- Pass data from Django to JavaScript -->
   <script>
     window.mapNavigationContext = {
       destination: "{{ travel_plan.destination|escapejs }}",
@@ -119,10 +120,10 @@
     };
   </script>
   
-  <!-- Indlæs vores eksterne JS-fil -->
+  <!-- Load custom JavaScript for map navigation functionality -->
   <script src="{% static 'tripnavigator/js/map-navigation.js' %}"></script>
   
-  <!-- Initialiser kortet når DOM er klar -->
+  <!-- Initialize the map navigation when the DOM is ready -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       initMapNavigation(window.mapNavigationContext);

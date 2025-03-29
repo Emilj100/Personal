@@ -4,16 +4,17 @@
 {% block title %}Home{% endblock %}
 
 {% block header_wrapper %}
+<!-- Header container with gradient background and rounded bottom corners -->
 <div class="container-fluid p-0" 
      style="background: linear-gradient(135deg, #1FA2FF 0%, #12D8FA 100%);
             border-bottom-left-radius: 10rem;
             border-bottom-right-radius: 10rem;">
   {{ block.super }}
   
-  <!-- Hero-sektion specifik for index-siden -->
+  <!-- Hero section specific to the index page -->
   <div class="container py-5">
     <div class="row align-items-center">
-      <!-- Venstre kolonne: Tekst og CTA -->
+      <!-- Left column: Text and CTA -->
       <div class="col-12 col-md-6 mb-4 mb-md-0 text-white text-center text-md-start slide-left">
         <h1 class="display-4 fw-bold">Let's Plan Your Perfect Trip</h1>
         <p class="lead">
@@ -25,7 +26,7 @@
           <a class="btn btn-light btn-prim btn-xl" href="{% url 'register' %}">Get started</a>
         {% endif %}
       </div>
-      <!-- Højre kolonne: Billede -->
+      <!-- Right column: Image -->
       <div class="col-12 col-md-6 text-center">
         <img src="{% static 'tripnavigator/images/hero-globe-plane.png' %}" alt="Globe with plane" class="img-fluid slide-right">
       </div>
@@ -35,8 +36,8 @@
 {% endblock %}
 
 {% block content %}
+<!-- Four Boxes Section overlapping the gradient and white background -->
 <div class="fade-in">
-  <!-- Four Boxes Section, overlapping den blå gradient og den hvide baggrund -->
   <div class="container position-relative" style="margin-top: -10rem;">
     <div class="row g-4">
       <!-- Box 1: 100+ Destinations -->
@@ -83,17 +84,17 @@
   </div>
 
   <div class="container px-4 py-5" id="featured-3">
-    <!-- Overskrift og undertekst -->
+    <!-- Section title and subtitle -->
     <div class="mx-auto text-center mb-5" style="max-width: 36rem;">
       <h1 class="pb-2 border-bottom">Discover Our Services</h1>
       <p class="mt-3 lead text-muted">
         Find the best deals on Flights, Hotels, and Experiences tailored to your travel needs.
       </p>
     </div>
-    <!-- Nøgletal/Info-bokse -->
+    <!-- Info boxes -->
     <div class="container mx-auto mt-5 mt-lg-6" style="max-width: 60rem;">
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-5 gy-4">
-        <!-- Boks 1: Flights -->
+        <!-- Box 1: Flights -->
         <div class="col">
           <div class="text-center">
             <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-gradient rounded-circle fs-2 mb-3" style="width: 4rem; height: 4rem;">
@@ -103,7 +104,7 @@
             <p>Search and compare flights to get the best deals for your journey.</p>
           </div>
         </div>
-        <!-- Boks 2: Hotels -->
+        <!-- Box 2: Hotels -->
         <div class="col">
           <div class="text-center">
             <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-gradient rounded-circle fs-2 mb-3" style="width: 4rem; height: 4rem;">
@@ -113,7 +114,7 @@
             <p>Discover comfortable and affordable accommodations worldwide.</p>
           </div>
         </div>
-        <!-- Boks 3: Experiences -->
+        <!-- Box 3: Experiences -->
         <div class="col">
           <div class="text-center">
             <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-gradient rounded-circle fs-2 mb-3" style="width: 4rem; height: 4rem;">
@@ -126,7 +127,7 @@
       </div>
     </div>
     
-    <!-- Samlet Call to Action-knap -->
+    <!-- Global Call to Action -->
     <div class="text-center mt-5">
       {% if user.is_authenticated %}
         <a class="btn btn-dark btn-xl btn-border" href="{% url 'trip-planner' %}">Trip Planner</a>
@@ -137,11 +138,10 @@
   </div>
 </div>
 
+<!-- Popular Destinations section -->
 <div class="container my-5 shadow p-5" style="border-radius: 3rem;" id="popular-destinations">
-  <!-- Overskrift og undertekst -->
   <h2 class="pb-2 border-bottom">Popular Destinations</h2>
   <p class="text-muted">Get inspiration for your next journey</p>
-  <!-- Start row -->
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mt-4">
     <!-- Destination 1 -->
     <div class="col">
@@ -179,15 +179,16 @@
         </div>
       </div>
     </div>
-  </div> <!-- End row -->
-</div> <!-- End container -->
+  </div>
+</div>
 
+<!-- Section with image and text -->
 <div class="row flex-lg-row-reverse align-items-center g-5" style="padding-bottom: 10rem;">
-  <!-- Venstre kolonne: Billede (slide in from right) -->
+  <!-- Left column: Image (slide in from right) -->
   <div class="col-12 col-sm-10 col-lg-6 text-center scroll-animate slide-right">
     <img src="{% static 'tripnavigator/images/travel.png' %}" class="d-block mx-lg-auto img-fluid" style="border-radius: 2rem;" alt="Take Off with Confidence" width="700" height="500" loading="lazy">
   </div>
-  <!-- Højre kolonne: Tekst (slide in from left) -->
+  <!-- Right column: Text (slide in from left) -->
   <div class="col-12 col-lg-6 scroll-animate slide-left text-center text-lg-start">
     <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Plan Your Entire Trip From Start to Finish</h1>
     <p class="lead">
@@ -206,12 +207,13 @@
   </div>
 </div>
 
+<!-- Section with image and text -->
 <div class="row align-items-center g-5" style="padding-bottom: 10rem;">
-  <!-- Venstre kolonne: Billede (slide in from left) -->
+  <!-- Left column: Image (slide in from left) -->
   <div class="col-12 col-sm-10 col-lg-6 text-center scroll-animate slide-left">
     <img src="{% static 'tripnavigator/images/ai.png' %}" class="d-block mx-lg-auto img-fluid" style="border-radius: 2rem;" alt="Meet Your Travel AI Assistant" width="700" height="500" loading="lazy">
   </div>
-  <!-- Højre kolonne: Tekst (slide in from right) -->
+  <!-- Right column: Text (slide in from right) -->
   <div class="col-12 col-lg-6 scroll-animate slide-right text-center text-lg-start">
     <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Meet Your Travel AI Assistant</h1>
     <p class="lead">
@@ -229,6 +231,7 @@
 {% endblock %}
 
 {% block full_width_content %}
+<!-- Full width call to action section -->
 <div class="container-fluid bg-light m-0 p-0">
   <div class="w-100 py-5 text-center">
     <h1 class="display-5 fw-bold text-body-emphasis">Ready to Get Started?</h1>

@@ -1,22 +1,31 @@
+// Wait for the DOM to be fully loaded before running the script
 document.addEventListener('DOMContentLoaded', function() {
+  // Get references to DOM elements: chat form, user message input, and chat container
   const chatForm = document.getElementById('chatForm');
   const userMessageInput = document.getElementById('userMessage');
   const chatContainer = document.getElementById('chatContainer');
 
+  // Initialize an array to store the chat history
   let chatHistoryArray = [];
 
+  // Load any saved chat history from sessionStorage
   loadChatHistory();
 
+  // Listen for the chat form submission
   chatForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const userMessage = userMessageInput.value.trim();
+    // If the input is empty, do nothing
     if (!userMessage) return;
 
+    // Append the user's message bubble to the chat and clear the input field
     appendMessageBubble('user', userMessage, true, false);
     userMessageInput.value = '';
 
+    // Create an ephemeral AI bubble (e.g., "AI is thinking...")
     const thinkingElem = createEphemeralBubble('ai');
 
+    // Send the user's message to the AI via AJAX POST request
     $.ajax({
       type: 'POST',
       url: '/ai/get-response/',
@@ -25,9 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
         csrfmiddlewaretoken: getCSRFToken()
       },
       success: function(response) {
+        // Remove the ephemeral "thinking" bubble
         if (thinkingElem) {
           chatContainer.removeChild(thinkingElem);
         }
+        // Append the AI's response; handle errors if provided
         if (response.message) {
           appendMessageBubble('ai', response.message, true, true);
         } else if (response.error) {
@@ -44,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-
+  // Function to create an ephemeral bubble (e.g., "AI is thinking...")
   function createEphemeralBubble(role) {
     const bubbleContainer = document.createElement('div');
     bubbleContainer.classList.add('bubble-container', role);
@@ -62,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const now = new Date();
     timeStamp.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+    // For user, timestamp is added before the avatar; for AI, after the message bubble
     if (role === 'user') {
       bubbleContainer.appendChild(timeStamp);
       bubbleContainer.appendChild(avatarDiv);
@@ -78,13 +90,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   /**
-    
-    @param {string} role
-    @param {string} text 
-    @param {boolean} gemIHistorik 
-    @param {boolean} isHtml
+   * Append a message bubble to the chat.
+   *
+   * @param {string} role - 'user' or 'ai'
+   * @param {string} text - Message content
+   * @param {boolean} gemIHistorik - Whether to save the message in chat history
+   * @param {boolean} isHtml - Whether the text contains HTML to parse
    */
-
   function appendMessageBubble(role, text, gemIHistorik=false, isHtml=false) {
     const bubbleContainer = document.createElement('div');
     bubbleContainer.classList.add('bubble-container', role);
@@ -95,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const messageBubble = document.createElement('div');
     messageBubble.classList.add('message-bubble', role);
+    // If isHtml is true, parse the message as HTML; otherwise set as text
     if (isHtml) {
       messageBubble.innerHTML = parseAiMessage(text);
     } else {
@@ -106,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const now = new Date();
     timeStamp.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+    // Order the elements differently for user and AI messages
     if (role === 'user') {
       bubbleContainer.appendChild(timeStamp);
       bubbleContainer.appendChild(avatarDiv);
@@ -119,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
     chatContainer.appendChild(bubbleContainer);
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
+    // Save the message in history if requested
     if (gemIHistorik) {
       const msgObj = {
         role: role,
@@ -127,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         timestamp: now.toISOString()
       };
       chatHistoryArray.push(msgObj);
+      // Keep only the latest 10 messages in history
       if (chatHistoryArray.length > 10) {
         chatHistoryArray = chatHistoryArray.slice(-10);
       }
@@ -135,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return bubbleContainer;
   }
 
-
+  // Replace markdown-style **text** with HTML heading elements for AI messages
   function parseAiMessage(text) {
     let parsed = text.replace(/\*\*(.*?)\*\*/g, function(match, p1) {
       return '<h4 style="font-size:1rem; margin:0 0 5px;">' + p1 + '</h4>';
@@ -144,11 +160,12 @@ document.addEventListener('DOMContentLoaded', function() {
     return parsed;
   }
 
+  // Save chat history in sessionStorage
   function saveChatHistory() {
     sessionStorage.setItem('chatHistory', JSON.stringify(chatHistoryArray));
   }
 
-
+  // Load saved chat history from sessionStorage and render it
   function loadChatHistory() {
     const stored = sessionStorage.getItem('chatHistory');
     if (stored) {
@@ -165,11 +182,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // Set predefined text into the user message input and focus it
   window.setPredefined = function(text) {
     userMessageInput.value = text;
     userMessageInput.focus();
   };
 
+  // Function to retrieve the CSRF token from cookies
   function getCSRFToken() {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {

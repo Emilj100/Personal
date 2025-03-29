@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta tags and Bootstrap CSS/JS for responsive design -->
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, width=device-width">
 
@@ -14,7 +15,7 @@
 </head>
 <body>
 
- <!-- Login Form Container -->
+<!-- Login Form Container -->
 <div class="form-container">
     <main class="form-signin">
         <form action="{% url 'login' %}" method="post">
@@ -22,10 +23,12 @@
             <img src="{% static 'tripnavigator/images/logo-black-vertical.png' %}" alt="Logo" class="me-2 img-fluid sign-in-picture">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
+            <!-- Email Input Field -->
             <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
                 <label for="floatingInput">Email address</label>
             </div>
+            <!-- Password Input Field -->
             <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
                 <label for="floatingPassword">Password</label>
@@ -35,7 +38,7 @@
                 <div class="message">{{ message }}</div>
             {% endif %}
         
-
+            <!-- Sign in Button -->
             <input class="btn btn-dark btn-border" style="padding: 0.5rem 1rem;" type="submit" value="Sign in">
         </form>
     </main>

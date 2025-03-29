@@ -5,14 +5,15 @@
 
 {% block content %}
 <div class="container">
+  <!-- Page heading -->
   <h2 class="mb-4">Documents for {{ trip.title }}</h2>
   
-  <!-- Upload Button (åbner modal) -->
+  <!-- Upload Button (opens modal) -->
   <div class="mb-4">
     <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#uploadDocumentModal">Upload New Document</a>
   </div>
   
-  <!-- Dokumenter Grid -->
+  <!-- Documents Grid -->
   <div class="row g-4">
     {% for doc in documents %}
       <div class="col-md-4">
@@ -32,10 +33,10 @@
               <small class="text-muted">Uploaded: {{ doc.uploaded_at|date:"Y-m-d" }}</small>
             </p>
             <div class="d-flex gap-2">
-              <!-- Download-knap -->
+              <!-- Download button -->
               <a href="{{ doc.file.url }}" class="btn btn-outline-primary btn-sm" download>Download</a>
               
-              <!-- Vis kun "Show"-knap, hvis PDF -->
+              <!-- Show button (only for PDFs) -->
               {% if doc.file.url|lower|slice:"-4:" == ".pdf" %}
                 <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#previewModal{{ doc.id }}">
                   Show
@@ -46,7 +47,7 @@
         </div>
       </div>
       
-      <!-- Opret kun modal, hvis PDF -->
+      <!-- Modal preview for PDF documents -->
       {% if doc.file.url|lower|slice:"-4:" == ".pdf" %}
         <div class="modal fade" id="previewModal{{ doc.id }}" tabindex="-1" aria-labelledby="previewModalLabel{{ doc.id }}" aria-hidden="true">
           <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -56,7 +57,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <!-- Indsæt PDF i iframe -->
+                <!-- PDF displayed in an iframe -->
                 <iframe src="{{ doc.file.url }}" width="100%" height="300px" style="border: none;"></iframe>
               </div>
               <div class="modal-footer">
