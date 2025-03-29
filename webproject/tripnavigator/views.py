@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404,
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.dateparse import parse_date
