@@ -1,22 +1,21 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404,
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.dateparse import parse_date
 from django.views.decorators.http import require_POST
-from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import IntegrityError
 from django.db.models import Sum
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404
+from django.http import HttpResponseRedirect, JsonResponse, Http404
 
-from decouple import config
 import requests
 import json
-from rest_framework.decorators import api_view
-from decouple import config
 import openai
 import datetime
+from rest_framework.decorators import api_view
+from decouple import config
 
 from .forms import CreateTravelPlanForm, DocumentForm, ExpenseForm, TripForm, ProfileSettingsForm
 from .models import User, TravelPlanShare, TravelPlan, Document, Expense, Activity
@@ -98,13 +97,13 @@ def trip_overview(request, trip_id):
     return render(request, "tripnavigator/dashboard/overview.html", context)
 
 
-
+@login_required
 def suggestions(request, trip_id):
     # Retrieve the travel plan and render the suggestions page.
     trip = get_object_or_404(TravelPlan, id=trip_id)
     return render(request, "tripnavigator/dashboard/suggestions.html", {"trip": trip})
 
-
+@login_required
 @csrf_exempt
 def generate_suggestions(request, trip_id):
     if request.method == "POST":
@@ -148,7 +147,7 @@ def generate_suggestions(request, trip_id):
         
         return JsonResponse({"suggestions": suggestions})
 
-
+@login_required
 @csrf_exempt
 def add_suggestion_to_plan(request, trip_id):
     """
@@ -173,7 +172,7 @@ def add_suggestion_to_plan(request, trip_id):
 
 
 
-
+@login_required
 def day_planner(request, travel_plan_id):
     # Retrieve the travel plan by ID; return 404 if not found.
     travel_plan = get_object_or_404(TravelPlan, pk=travel_plan_id)
@@ -238,7 +237,7 @@ def day_planner(request, travel_plan_id):
     }
     return render(request, "tripnavigator/dashboard/day-planner.html", context)
 
-
+@login_required
 def update_activity_date(request):
     """Update an activity's date via an AJAX POST request."""
     if request.method == "POST":
@@ -261,7 +260,7 @@ def update_activity_date(request):
             return JsonResponse({"success": True})
     return JsonResponse({"success": False}, status=400)
 
-
+@login_required
 def delete_activity(request):
     """Delete an activity via an AJAX POST request."""
     if request.method == "POST":
@@ -329,7 +328,7 @@ def upload_document(request, trip_id):
     return render(request, "tripnavigator/dashboard/upload_document.html", context)
 
 
-
+@login_required
 def budget(request, trip_id):
     # Retrieve the travel plan and its expenses
     trip = get_object_or_404(TravelPlan, id=trip_id)
@@ -375,6 +374,7 @@ def budget(request, trip_id):
         "form": form,
     })
 
+@login_required
 def delete_expense(request, trip_id, expense_id):
     # Retrieve the specific expense and delete it on POST request
     expense = get_object_or_404(Expense, id=expense_id, travel_plan_id=trip_id)
@@ -386,6 +386,7 @@ def delete_expense(request, trip_id, expense_id):
 
 OPENCAGE_API_KEY = config('OPENCAGE_API_KEY')
 
+@login_required
 def map_navigation(request, trip_id):
     # Retrieve the travel plan using the provided trip_id; 404 if not found.
     travel_plan = get_object_or_404(TravelPlan, pk=trip_id)
@@ -407,7 +408,7 @@ def map_navigation(request, trip_id):
     }
     return render(request, "tripnavigator/dashboard/map-navigation.html", context)
 
-
+@login_required
 def update_hotel_address(request, travel_plan_id):
     # This view updates the hotel address via an AJAX POST request.
     if request.method == 'POST':
@@ -452,6 +453,7 @@ def settings(request, trip_id):
         "form": form,
     })
 
+@login_required
 def trip_planner(request):
     # Retrieve all travel plans created by the current user
     my_trips = request.user.travel_plans.all()
@@ -466,7 +468,7 @@ def trip_planner(request):
 
 
 
-
+@login_required
 def create_travelplan(request):
     if request.method == "POST":
         # Process form submission to create a new travel plan
